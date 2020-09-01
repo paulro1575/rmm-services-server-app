@@ -39,7 +39,7 @@ docker pull postgres:{version}
 
 To run the PostgreSQL container instance, you can run this command:
 ```bash
-docker run --name {postgres_container_name} -p 5432:5432 -e POSTGRES_PASSWORD=rmm-user-2020 -d postgres
+docker run --name {postgres_container_name} -p 5432:5432 -e POSTGRES_PASSWORD={postgres_password} -d postgres
 ```
 
 Remember if you pull a docker specific PostgreSQL version image, you can run the container instance add the version 

@@ -22,6 +22,9 @@ plugins {
 group = 'com.rmm'
 version = '0.0.1-SNAPSHOT'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
 	mavenCentral()
 }
@@ -35,6 +38,8 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-crypto:5.3.4.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.postgresql:postgresql:42.2.16'
+	implementation 'junit:junit:4.12'
+	testImplementation('org.springframework.security:spring-security-test')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

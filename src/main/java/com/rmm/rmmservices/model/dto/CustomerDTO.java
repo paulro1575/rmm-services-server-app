@@ -53,6 +53,9 @@ public class CustomerDTO {
 
     @Override
     public String toString() {
-        return "Username: " + username;
+        return "{" +
+                "\"username\": \"" + username + '\"' +
+                ", \"password\": \"" + password + '\"' +
+                "}";
     }
 }

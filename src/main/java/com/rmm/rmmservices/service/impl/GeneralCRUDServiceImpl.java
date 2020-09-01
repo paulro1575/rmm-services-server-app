@@ -26,7 +26,6 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
             final Optional<DOMAIN> domainObject = findExisting(dtoObject);
             if(!domainObject.isPresent()){
                 DOMAIN domain = mapTo(dtoObject);
-                System.out.println(domain);
                 return this.repository.save(domain);
             } else {
                 throw new DatabaseException(String.format("Object %s existing in the database", dtoObject.toString()));
