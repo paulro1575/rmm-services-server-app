@@ -37,25 +37,25 @@ If you need to install PostgreSQL database specific version you can run this com
 docker pull postgres:{version}
 ```
 
-To run the postgres container instance, you can run this command:
+To run the PostgreSQL container instance, you can run this command:
 ```bash
-docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=rmm-user-2020 -d postgres
+docker run --name {postgres_container_name} -p 5432:5432 -e POSTGRES_PASSWORD=rmm-user-2020 -d postgres
 ```
 
-Remember that if you pull a docker specific postgres version image, you can run the container instance add the version
+Remember if you pull a docker specific PostgreSQL version image, you can run the container instance add the version 
 like this:
 ```bash
 docker run --name {postgres_container_name} -p 5432:5432 -e POSTGRES_PASSWORD={postgres_password} -d postgres:{version}
 ```
 
-To start the postgres docker container you can use the following command:
+To start the PostgreSQL docker container you can use the following command:
 ```bash
 docker start {postgres_container_name}
 ```
 
 ### REST API Service
 
-This services was build using Gradle, so in this content you can use the following tasks:
+This services uses Gradle Build Tool, so in this context you can use the following tasks:
 
 #### Build
 
@@ -72,7 +72,7 @@ You can run the services using this command:
 ```bash
 ./gradlew bootRun
 ```
-Or executing the jar compiled file, after execution of build command, like this:
+Also, you can run the services executing the jar compiled file, after execution of build command, like this:
 ```bash
 java -jar {rmm-services_path}/build/libs/rmmservices-0.0.1-SNAPSHOT.jar
 ```
