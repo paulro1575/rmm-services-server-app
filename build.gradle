@@ -38,7 +38,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-crypto:5.3.4.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.postgresql:postgresql:42.2.16'
-	implementation 'junit:junit:4.12'
+	testImplementation 'junit:junit:4.12'
 	testImplementation('org.springframework.security:spring-security-test')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -55,6 +55,21 @@ jar {
 
 test {
 	useJUnitPlatform()
+
+	testLogging {
+		events "passed", "skipped", "failed"
+		showExceptions true
+		showCauses true
+		showStackTraces true
+
+		afterTest { desc, result ->
+			logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+		}
+	}
+
+	reports {
+		html.enabled = true
+	}
 }
 
 [bootRun].each { runTask ->

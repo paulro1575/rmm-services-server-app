@@ -65,6 +65,19 @@ You can build the services using this command:
 ./gradlew build
 ```
 
+### Test
+You can run the API unit tests using this command:
+
+```bash
+./gradlew test
+```
+
+Also, you can run a clean test using this command:
+
+```bash
+./gradlew clean test
+```
+
 #### Run
 
 You can run the services using this command:
