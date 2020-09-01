@@ -5,22 +5,26 @@ Java REST API for RMM basic services to allows:
  - Add, update and remove services to customer devices
  - Calculate monthly price to pay for device services
  
-##Technologies
+## Technologies
  - PostgreSQL
  - Java 8
  - Gradle 6.4.1
  
-##Security
+## Security
+
 This API uses JWT for manage API access
  
-##Requirements
+## Requirements
+
  - PostgreSQL
  - Java 8 
 
-##Setup
+## Setup
+
 To install and run this project you need to:
 
-###PostgreSQL
+### PostgreSQL
+
 You can install PostgreSQL database as you wish. I recommend to use postgreSQL inside a docker container to a 
 quickly installation.
 
@@ -49,10 +53,12 @@ To start the postgres docker container you can use the following command:
 docker start {postgres_container_name}
 ```
 
-###REST API Service
+### REST API Service
+
 This services was build using Gradle, so in this content you can use the following tasks:
 
 #### Build
+
 You can build the services using this command:
 
 ```bash
@@ -60,6 +66,7 @@ You can build the services using this command:
 ```
 
 #### Run
+
 You can run the services using this command:
 
 ```bash
