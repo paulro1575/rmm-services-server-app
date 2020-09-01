@@ -1,0 +1,70 @@
+import java.text.SimpleDateFormat
+
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.3.RELEASE"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.3.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+	id 'idea'
+}
+
+group = 'com.rmm'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework:spring-web:5.2.8.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.3.3.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.3.3.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.3.RELEASE'
+	implementation 'org.springframework.security:spring-security-crypto:5.3.4.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.postgresql:postgresql:42.2.16'
+	implementation 'junit:junit:4.12'
+	testImplementation('org.springframework.security:spring-security-test')
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+jar {
+	manifest {
+		attributes(
+				'Build-Time' : new SimpleDateFormat().format(new Date())
+		)
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+[bootRun].each { runTask ->
+	configure(runTask) {
+		systemProperties System.properties
+	}
+}
+
+bootRun {
+	if (project.hasProperty('args')){
+		args = (project.args.split("\\s+" as Closure) as List)
+	}
+}
