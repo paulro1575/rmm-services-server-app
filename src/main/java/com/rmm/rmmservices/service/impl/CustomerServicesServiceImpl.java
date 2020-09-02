@@ -4,6 +4,8 @@ import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
 import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
 
     @Autowired
     private CustomerServiceRepository customerServiceRepository;
+    private final Logger LOGGER = LoggerFactory.getLogger(CustomerServicesServiceImpl.class);
 
     @Override
     public CustomerServiceDTO update(Long id, CustomerServiceDTO dtoObject) throws Exception {
@@ -27,6 +30,8 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
             service.setServiceName(dtoObject.getServiceName());
             return mapToDTO(this.customerServiceRepository.save(service));
         } else {
+            LOGGER.warn(String.format("Service %s not found into database",
+                    dtoObject.toString()));
             throw new NoSuchElementException(String.format("Service: %S not found on the database",
                     dtoObject.getServiceName()));
         }

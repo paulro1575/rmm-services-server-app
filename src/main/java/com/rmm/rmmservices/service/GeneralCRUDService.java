@@ -14,7 +14,7 @@ public interface GeneralCRUDService<DOMAIN, DTO> {
     DTO update(Long id, DTO dtoObject) throws Exception;
     void delete(Long id) throws DatabaseException;
     List<DTO> findAll(String orderCriteria, Sort.Direction direction);
-    DTO findById(Long id) throws Exception;
+    Optional<DOMAIN> findById(Long id);
     DOMAIN mapTo(DTO dtoObject);
     DTO mapToDTO(DOMAIN domainObject);
     Optional<DOMAIN> findExisting(DTO dtoObject);

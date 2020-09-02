@@ -2,6 +2,7 @@ package com.rmm.rmmservices.service.impl;
 
 import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.service.GeneralCRUDService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,20 +21,23 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
     @Autowired
     private JpaRepository<DOMAIN, Long> repository;
 
+    private Logger LOGGER;
+
     @Override
     public DOMAIN create(DTO dtoObject) throws DatabaseException {
         try {
             final Optional<DOMAIN> domainObject = findExisting(dtoObject);
             if(!domainObject.isPresent()){
-                System.out.println("PARA GRABAR " + dtoObject.toString());
                 DOMAIN domain = mapTo(dtoObject);
-                System.out.println("PARA GRABAR domain" + domain.toString());
                 return this.repository.save(domain);
             } else {
-                throw new DatabaseException("The object already exists in the database");
+                LOGGER.warn(String.format("The object %s already exists into database", domainObject.toString()));
+                throw new DatabaseException("The object already exists into database");
             }
         } catch(Exception ex) {
-            throw new DatabaseException(ex.getMessage());
+            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", ex.getMessage()));
+            if(ex instanceof DatabaseException) throw ex;
+            else throw new DatabaseException("Some objects doesn't exist into database");
         }
     }
 
@@ -42,6 +46,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
         try {
             repository.deleteById(id);
         } catch (Exception exception){
+            LOGGER.warn(String.format("Couldn't add object to database due the error: ", exception.getMessage()));
             throw new DatabaseException(String.format("The object %s not exists into database", id));
         }
     }
@@ -55,12 +60,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
     }
 
     @Override
-    public DTO findById(Long id) throws Exception {
-        final Optional<DOMAIN> object = repository.findById(id);
-        if (object.isPresent()) {
-            return mapToDTO(object.get());
-        } else {
-            throw new Exception(String.format("The object %s not exists into database", id));
-        }
+    public Optional<DOMAIN> findById(Long id) {
+        return this.repository.findById(id);
     }
 }

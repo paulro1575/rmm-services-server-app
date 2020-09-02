@@ -20,7 +20,8 @@ public class DeviceType {
     public DeviceType() {
     }
 
-    public DeviceType(Long id, String typeName) {
+    public DeviceType(Long id,
+                      String typeName) {
         this.id = id;
         this.typeName = typeName;
     }

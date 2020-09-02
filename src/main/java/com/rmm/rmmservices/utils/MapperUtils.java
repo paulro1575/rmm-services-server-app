@@ -1,13 +1,7 @@
 package com.rmm.rmmservices.utils;
 
-import com.rmm.rmmservices.model.dto.CustomerDTO;
-import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
-import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
-import com.rmm.rmmservices.model.dto.ServicePriceDTO;
-import com.rmm.rmmservices.model.persistence.entities.Customer;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
-import com.rmm.rmmservices.model.persistence.entities.DeviceType;
-import com.rmm.rmmservices.model.persistence.entities.ServicePrice;
+import com.rmm.rmmservices.model.dto.*;
+import com.rmm.rmmservices.model.persistence.entities.*;
 
 /**
  * This class helps to manage DOMAIN - DTO mappers
@@ -106,6 +100,8 @@ public final class MapperUtils {
     /**
      * This method unmaps from ServicePriceDTO to ServicePrice object
      * @param servicePriceDTO ServicePriceDTO
+     * @param deviceType DeviceType object
+     * @param customerService customerService object
      * @return ServicePrice object
      */
     public static ServicePrice unmapServicePrice(ServicePriceDTO servicePriceDTO, DeviceType deviceType,
@@ -116,5 +112,39 @@ public final class MapperUtils {
         servicePrice.setCustomerService(customerService);
         servicePrice.setPrice(servicePriceDTO.getPrice());
         return servicePrice;
+    }
+
+    /**
+     * This method maps from Device object to DeviceDTO
+     * @param device Device object
+     * @return DeviceDTO
+     */
+    public static DeviceDTO mapCustomerDevice(Device device) {
+        DeviceDTO deviceDTO = new DeviceDTO();
+        if(device.getId() != null) deviceDTO.setId(device.getId());
+        deviceDTO.setSystemName(device.getSystemName());
+        deviceDTO.setDeviceTypeName(device.getDeviceType().getTypeName());
+        deviceDTO.setServiceName(device.getCustomerService().getServiceName());
+        deviceDTO.setCustomerId(device.getCustomer().getId());
+        return  deviceDTO;
+    }
+
+    /**
+     * This method unmaps from DeviceDTO to Device object
+     * @param deviceDTO DeviceDTO
+     * @param deviceType DeviceType object
+     * @param customerService CustomerService object
+     * @param customer Customer Object
+     * @return Device object
+     */
+    public static Device unmapsCustomerDevice(DeviceDTO deviceDTO, DeviceType deviceType,
+                                              CustomerService customerService, Customer customer){
+        Device device = new Device();
+        if(deviceDTO.getId() != null) device.setId(deviceDTO.getId());
+        device.setSystemName(deviceDTO.getSystemName());
+        device.setDeviceType(deviceType);
+        device.setCustomerService(customerService);
+        device.setCustomer(customer);
+        return device;
     }
 }

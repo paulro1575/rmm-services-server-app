@@ -3,8 +3,6 @@ package com.rmm.rmmservices.model.dto;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 
-import java.util.Date;
-
 /**
  * @author Paul Rodríguez-Ch
  */
@@ -14,22 +12,26 @@ public class DeviceDTO {
     private Long id;
 
     @NotNull
+    private String systemName;
+
+    @NotNull
     private String deviceTypeName;
 
     @NotNull
-    private String customerName;
+    private String serviceName;
 
-    @Nullable
-    private Date initialDate;
+    @NotNull
+    private Long customerId;
 
     public DeviceDTO() {
     }
 
-    public DeviceDTO(Long id, String deviceTypeName, String customerName, Date initialDate) {
+    public DeviceDTO(Long id, String systemName, String deviceTypeName, String serviceName, Long customerId) {
         this.id = id;
+        this.systemName = systemName;
         this.deviceTypeName = deviceTypeName;
-        this.customerName = customerName;
-        this.initialDate = initialDate;
+        this.serviceName = serviceName;
+        this.customerId = customerId;
     }
 
     public Long getId() {
@@ -40,6 +42,14 @@ public class DeviceDTO {
         this.id = id;
     }
 
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
+    }
+
     public String getDeviceTypeName() {
         return deviceTypeName;
     }
@@ -48,28 +58,29 @@ public class DeviceDTO {
         this.deviceTypeName = deviceTypeName;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public Date getInitialDate() {
-        return initialDate;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setInitialDate(Date initialDate) {
-        this.initialDate = initialDate;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "\"deviceTypeName\": \"" + deviceTypeName +
-                "\", \"customerName\" : \"" + customerName +
-                "\", \"initialDate\" : \"" + initialDate +
+                "\"systemName\": \"" + systemName + "\"" +
+                ", \"deviceTypeName\": \"" + deviceTypeName + "\"" +
+                ", \"serviceName\": \"" + serviceName + "\"" +
+                ", \"customerId\": \"" + customerId +
                 "\"}";
     }
 }

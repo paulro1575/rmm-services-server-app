@@ -1,8 +1,6 @@
 package com.rmm.rmmservices.model.persistence.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Date;
 
 /**
  * @author Paul Rodríguez-Ch
@@ -16,28 +14,34 @@ public class Device {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
+    @Column(name = "system_name")
+    private String systemName;
+
     @ManyToOne
     @JoinColumn(name = "device_type_id", referencedColumnName = "id")
     private DeviceType deviceType;
 
-    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    private CustomerService customerService;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @NotNull
-    @Column(name = "initial_date")
-    private Date initialDate;
-
     public Device() {
     }
 
-    public Device(Long id, @NotNull DeviceType deviceType, @NotNull Customer customer, @NotNull Date initialDate) {
+    public Device(Long id,
+                  String systemName,
+                  DeviceType deviceType,
+                  CustomerService customerService,
+                  Customer customer) {
         this.id = id;
+        this.systemName = systemName;
         this.deviceType = deviceType;
+        this.customerService = customerService;
         this.customer = customer;
-        this.initialDate = initialDate;
     }
 
     public Long getId() {
@@ -48,12 +52,28 @@ public class Device {
         this.id = id;
     }
 
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
+    }
+
     public DeviceType getDeviceType() {
         return deviceType;
     }
 
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;
+    }
+
+    public CustomerService getCustomerService() {
+        return customerService;
+    }
+
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     public Customer getCustomer() {
@@ -64,21 +84,14 @@ public class Device {
         this.customer = customer;
     }
 
-    public Date getInitialDate() {
-        return initialDate;
-    }
-
-    public void setInitialDate(Date initialDate) {
-        this.initialDate = initialDate;
-    }
-
     @Override
     public String toString() {
         return "Device{" +
                 "id=" + id +
+                ", systemName='" + systemName + '\'' +
                 ", deviceType=" + deviceType +
+                ", customerService=" + customerService +
                 ", customer=" + customer +
-                ", initialDate=" + initialDate +
                 '}';
     }
 }

@@ -8,6 +8,8 @@ import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepositor
 import com.rmm.rmmservices.model.persistence.repository.DeviceTypeRepository;
 import com.rmm.rmmservices.model.persistence.repository.ServicePriceRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
     private DeviceTypeRepository deviceTypeRepository;
     @Autowired
     private CustomerServiceRepository customerServiceRepository;
+    private final Logger LOGGER = LoggerFactory.getLogger(ServicePriceServiceImpl.class);
 
     @Override
     public ServicePriceDTO update(Long id, ServicePriceDTO dtoObject) throws Exception {
@@ -39,9 +42,10 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
                 .findByServiceName(dtoObject.getCustomerServiceName());
         if(deviceType.isPresent() && customerService.isPresent()){
             return MapperUtils.unmapServicePrice(dtoObject, deviceType.get(), customerService.get());
-        } else{
-            return null;
         }
+        LOGGER.warn(String.format("ServicePrice %s some dependencies was not found into database",
+                dtoObject.toString()));
+        return null;
     }
 
     @Override
@@ -51,21 +55,7 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
 
     @Override
     public Optional<ServicePrice> findExisting(ServicePriceDTO dtoObject) {
-        System.out.println("SHEGA");
-        Optional<DeviceType> deviceType = this.deviceTypeRepository
-                .findByDeviceTypeName(dtoObject.getDeviceTypeName());
-        System.out.println("PASA: " + dtoObject.getDeviceTypeName());
-        Optional<CustomerService> customerService = this.customerServiceRepository
-                .findByServiceName(dtoObject.getCustomerServiceName());
-        System.out.println("ACABA " + dtoObject.getCustomerServiceName());
-        if (deviceType.isPresent() && customerService.isPresent()) {
-            System.out.println("HASTA ABAJO " + dtoObject.getPrice());
-            return this.servicePriceRepository.findByDeviceTypeAndService(
-                    deviceType.get().getId(),
-                    customerService.get().getId());
-        } else {
-            System.out.println("ELSE");
-            return Optional.empty();
-        }
+        return this.servicePriceRepository.findByDeviceTypeAndService(dtoObject.getDeviceTypeName(),
+                dtoObject.getCustomerServiceName());
     }
 }

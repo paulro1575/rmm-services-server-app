@@ -19,7 +19,8 @@ public class CustomerService {
     public CustomerService() {
     }
 
-    public CustomerService(Long id, String serviceName) {
+    public CustomerService(Long id,
+                           String serviceName) {
         this.id = id;
         this.serviceName = serviceName;
     }

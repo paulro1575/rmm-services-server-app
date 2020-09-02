@@ -1,7 +1,6 @@
 package com.rmm.rmmservices.model.persistence.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -16,25 +15,24 @@ public class ServicePrice {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "device_type_id", referencedColumnName = "id")
     private DeviceType deviceType;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "service_id", referencedColumnName = "id")
     private CustomerService customerService;
 
-    @NotNull
     @Column(name = "price")
     private BigDecimal price;
 
     public ServicePrice() {
     }
 
-    public ServicePrice(Long id, @NotNull DeviceType deviceType, @NotNull CustomerService customerService,
-                        @NotNull BigDecimal price) {
+    public ServicePrice(Long id,
+                        DeviceType deviceType,
+                        CustomerService customerService,
+                        BigDecimal price) {
         this.id = id;
         this.deviceType = deviceType;
         this.customerService = customerService;

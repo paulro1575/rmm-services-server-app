@@ -1,6 +1,7 @@
 package com.rmm.rmmservices.exceptions;
 
 /**
+ * This class manages the DatabaseExceptions
  * @author Paul Rodríguez-Ch
  */
 public class DatabaseException extends RuntimeException{

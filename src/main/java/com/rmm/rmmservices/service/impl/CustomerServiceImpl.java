@@ -7,9 +7,13 @@ import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
 import com.rmm.rmmservices.service.CustomerService;
 import com.rmm.rmmservices.utils.MapperUtils;
 import com.rmm.rmmservices.utils.PasswordUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,6 +24,7 @@ public class CustomerServiceImpl implements CustomerService<Customer, CustomerDT
 
     @Autowired
     private CustomerRepository customerRepository;
+    private final Logger LOGGER = LoggerFactory.getLogger(CustomerDeviceImpl.class);
 
     @Override
     public Customer create(CustomerDTO customerDTO) throws Exception {
@@ -28,10 +33,13 @@ public class CustomerServiceImpl implements CustomerService<Customer, CustomerDT
             if(!customer.isPresent()){
                 return this.customerRepository.save(mapTo(customerDTO));
             } else {
+                LOGGER.warn(String.format("Customer %s existing in the database",
+                        customerDTO.getUsername()));
                 throw new DatabaseException(String.format("Customer %s existing in the database",
                         customerDTO.getUsername()));
             }
         } catch(Exception ex) {
+            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", ex.getMessage()));
             throw new DatabaseException(ex.getMessage());
         }
     }
@@ -39,23 +47,39 @@ public class CustomerServiceImpl implements CustomerService<Customer, CustomerDT
     @Override
     public CustomerDTO update(Long id, CustomerDTO dtoObject) throws DatabaseException {
         try {
-            final Customer customer = mapTo(findById(id));
-            customer.setUsername(dtoObject.getUsername());
-            customer.setPassword(dtoObject.getPassword());
-            return mapToDTO(customer);
+            Optional<Customer> optionalCustomer = findById(id);
+            if(optionalCustomer.isPresent()) {
+                Customer customer = optionalCustomer.get();
+                customer.setUsername(dtoObject.getUsername());
+                customer.setPassword(dtoObject.getPassword());
+                this.customerRepository.save(customer);
+                return mapToDTO(customer);
+            } else {
+                LOGGER.warn(String.format("Customer: %S not found on the database",
+                        dtoObject.getUsername()));
+                throw new DatabaseException(String.format("Customer: %S not found on the database",
+                        dtoObject.getUsername()));
+            }
         } catch (Exception ex) {
-            throw new DatabaseException(String.format("Database can't update the customer: %s", ex.getMessage()));
+            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", ex.getMessage()));
+            throw new DatabaseException(ex.getMessage());
         }
     }
 
     @Override
-    public CustomerDTO findById(Long id) throws Exception {
-        final Optional<Customer> object = this.customerRepository.findById(id);
-        if (object.isPresent()) {
-            return mapToDTO(object.get());
-        } else {
-            throw new Exception(String.format("The customer %s not exists into database", id));
-        }
+    public void delete(Long id) throws DatabaseException {
+    // TODO
+    }
+
+    @Override
+    public List<CustomerDTO> findAll(String orderCriteria, Sort.Direction direction) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Optional<Customer> findById(Long id) {
+        return this.customerRepository.findById(id);
     }
 
     @Override
@@ -80,7 +104,10 @@ public class CustomerServiceImpl implements CustomerService<Customer, CustomerDT
             if(PasswordUtils.verifyPasswordMatch(customerDTO.getPassword(), customer.get().getPassword())){
                 return customer;
             }
+            LOGGER.warn("Couldn't login cause customer password isn't correct");
         }
+        LOGGER.warn(String.format("Couldn't login cause customer username is not correct: %s",
+                customerDTO.toString()));
         return Optional.empty();
     }
 }
