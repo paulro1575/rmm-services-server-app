@@ -1,5 +1,6 @@
 package com.rmm.rmmservices.service;
 
+import com.rmm.rmmservices.exceptions.DatabaseException;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public interface GeneralCRUDService<DOMAIN, DTO> {
     DOMAIN create(DTO dtoObject) throws Exception;
     DTO update(Long id, DTO dtoObject) throws Exception;
-    Boolean delete(Long id) throws Exception;
+    void delete(Long id) throws DatabaseException;
     List<DTO> findAll(String orderCriteria, Sort.Direction direction);
     DTO findById(Long id) throws Exception;
     DOMAIN mapTo(DTO dtoObject);

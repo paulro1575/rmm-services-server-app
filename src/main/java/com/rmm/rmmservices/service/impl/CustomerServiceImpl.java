@@ -28,10 +28,10 @@ public class CustomerServiceImpl implements CustomerService<Customer, CustomerDT
                 return this.customerRepository.save(mapTo(customerDTO));
             } else {
                 throw new DatabaseException(String.format("Customer %s existing in the database",
-                        customerDTO.toString()));
+                        customerDTO.getUsername()));
             }
         } catch(Exception ex) {
-            throw new DatabaseException(String.format(ex.getMessage()));
+            throw new DatabaseException(ex.getMessage());
         }
     }
 

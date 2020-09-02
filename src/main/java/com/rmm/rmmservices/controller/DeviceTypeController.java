@@ -1,8 +1,8 @@
 package com.rmm.rmmservices.controller;
 
 import com.rmm.rmmservices.exceptions.DatabaseException;
-import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
+import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
+import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,25 +18,25 @@ import javax.validation.Valid;
  * @author Paul Rodríguez-Ch
  */
 @RestController
-@RequestMapping(value = "/service/")
+@RequestMapping(value = "/device-type/")
 @Validated
-public class CustomerServiceController extends GeneralCrudController<CustomerService, CustomerServiceDTO> {
+public class DeviceTypeController extends GeneralCrudController<DeviceType, DeviceTypeDTO>{
 
     @Autowired
-    @Qualifier("customerServicesServiceImpl")
-    private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesService;
+    @Qualifier("deviceTypeServiceImpl")
+    private GeneralCRUDService<DeviceType, DeviceTypeDTO> deviceTypeService;
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST, path="/")
-    public ResponseEntity<Object> create(@Valid @RequestBody CustomerServiceDTO customerServiceDTO) throws Exception {
-        return super.create(customerServiceDTO);
+    public ResponseEntity<Object> create(@Valid @RequestBody DeviceTypeDTO deviceTypeDTO) throws Exception {
+        return super.create(deviceTypeDTO);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.PUT, path="/{service_id}")
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.PUT, path="/{device_type_id}")
     public ResponseEntity<Object> update(
-            @PathVariable(name="service_id") Long customerServiceId,
-            @Valid @RequestBody CustomerServiceDTO serviceDTO
+            @PathVariable(name="device_type_id") Long deviceTypeId,
+            @Valid @RequestBody DeviceTypeDTO deviceTypeDTO
     ) throws Exception {
-        return super.update(customerServiceId, serviceDTO);
+        return super.update(deviceTypeId, deviceTypeDTO);
     }
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET, path="/")
@@ -45,8 +45,9 @@ public class CustomerServiceController extends GeneralCrudController<CustomerSer
     }
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.DELETE,
-            path = "/{service_id}")
-    public ResponseEntity<Object> delete(@PathVariable(name="service_id") Long serviceId) throws DatabaseException {
-        return super.delete(serviceId);
+            path = "/{device_type_id}")
+    public ResponseEntity<Object> delete(@PathVariable(name="device_type_id") Long deviceTypeId)
+            throws DatabaseException {
+        return super.delete(deviceTypeId);
     }
 }

@@ -21,27 +21,26 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
     private JpaRepository<DOMAIN, Long> repository;
 
     @Override
-    public DOMAIN create(DTO dtoObject) throws Exception {
+    public DOMAIN create(DTO dtoObject) throws DatabaseException {
         try {
             final Optional<DOMAIN> domainObject = findExisting(dtoObject);
             if(!domainObject.isPresent()){
                 DOMAIN domain = mapTo(dtoObject);
                 return this.repository.save(domain);
             } else {
-                throw new DatabaseException(String.format("Object %s existing in the database", dtoObject.toString()));
+                throw new DatabaseException("The object already exists in the database");
             }
         } catch(Exception ex) {
-            throw new Exception(ex.getMessage());
+            throw new DatabaseException(ex.getMessage());
         }
     }
 
     @Override
-    public Boolean delete(Long id) throws Exception {
+    public void delete(Long id) throws DatabaseException {
         try {
             repository.deleteById(id);
-            return true;
         } catch (Exception exception){
-            throw new Exception(String.format("The object %s not exists into database", id));
+            throw new DatabaseException(String.format("The object %s not exists into database", id));
         }
     }
 

@@ -11,6 +11,6 @@ import java.util.Optional;
  */
 public interface CustomerServiceRepository extends JpaRepository<CustomerService, Long> {
 
-    @Query(value = "select s from service s where s.service_name = :serviceName", nativeQuery = true)
+    @Query(value = "SELECT * FROM service s WHERE s.service_name = :serviceName", nativeQuery = true)
     Optional<CustomerService> findByServiceName(String serviceName);
 }
