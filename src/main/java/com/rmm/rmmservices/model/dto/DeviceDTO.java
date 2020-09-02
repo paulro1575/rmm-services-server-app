@@ -1,6 +1,5 @@
 package com.rmm.rmmservices.model.dto;
 
-import com.rmm.rmmservices.model.persistence.entities.Customer;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 
@@ -15,10 +14,10 @@ public class DeviceDTO {
     private Long id;
 
     @NotNull
-    private DeviceTypeDTO deviceTypeDTO;
+    private String deviceTypeName;
 
     @NotNull
-    private Customer customer;
+    private String customerName;
 
     @Nullable
     private Date initialDate;
@@ -26,10 +25,10 @@ public class DeviceDTO {
     public DeviceDTO() {
     }
 
-    public DeviceDTO(Long id, DeviceTypeDTO deviceTypeDTO, Customer customer, Date initialDate) {
+    public DeviceDTO(Long id, String deviceTypeName, String customerName, Date initialDate) {
         this.id = id;
-        this.deviceTypeDTO = deviceTypeDTO;
-        this.customer = customer;
+        this.deviceTypeName = deviceTypeName;
+        this.customerName = customerName;
         this.initialDate = initialDate;
     }
 
@@ -41,20 +40,20 @@ public class DeviceDTO {
         this.id = id;
     }
 
-    public DeviceTypeDTO getDeviceTypeDTO() {
-        return deviceTypeDTO;
+    public String getDeviceTypeName() {
+        return deviceTypeName;
     }
 
-    public void setDeviceTypeDTO(DeviceTypeDTO deviceTypeDTO) {
-        this.deviceTypeDTO = deviceTypeDTO;
+    public void setDeviceTypeName(String deviceTypeName) {
+        this.deviceTypeName = deviceTypeName;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Date getInitialDate() {
@@ -67,7 +66,10 @@ public class DeviceDTO {
 
     @Override
     public String toString() {
-        return "Device Type: " + deviceTypeDTO +
-                ", Cuystomer " +  customer;
+        return "{" +
+                "\"deviceTypeName\": \"" + deviceTypeName +
+                "\", \"customerName\" : \"" + customerName +
+                "\", \"initialDate\" : \"" + initialDate +
+                "\"}";
     }
 }

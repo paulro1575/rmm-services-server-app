@@ -3,6 +3,7 @@ package com.rmm.rmmservices.model.dto;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
 /**
@@ -14,10 +15,12 @@ public class ServicePriceDTO {
     private Long id;
 
     @NotNull
-    private DeviceTypeDTO deviceTypeDTO;
+    @NotEmpty
+    private String deviceTypeName;
 
     @NotNull
-    private CustomerServiceDTO customerServiceDTO;
+    @NotEmpty
+    private String customerServiceName;
 
     @NotNull
     private BigDecimal price;
@@ -25,10 +28,13 @@ public class ServicePriceDTO {
     public ServicePriceDTO() {
     }
 
-    public ServicePriceDTO(Long id, DeviceTypeDTO deviceTypeDTO, CustomerServiceDTO customerServiceDTO, BigDecimal price) {
+    public ServicePriceDTO(Long id,
+                           @NotNull @NotEmpty String deviceTypeName,
+                           @NotNull @NotEmpty String customerServiceName,
+                           @NotNull @NotEmpty BigDecimal price) {
         this.id = id;
-        this.deviceTypeDTO = deviceTypeDTO;
-        this.customerServiceDTO = customerServiceDTO;
+        this.deviceTypeName = deviceTypeName;
+        this.customerServiceName = customerServiceName;
         this.price = price;
     }
 
@@ -40,20 +46,20 @@ public class ServicePriceDTO {
         this.id = id;
     }
 
-    public DeviceTypeDTO getDeviceTypeDTO() {
-        return deviceTypeDTO;
+    public String getDeviceTypeName() {
+        return deviceTypeName;
     }
 
-    public void setDeviceTypeDTO(DeviceTypeDTO deviceTypeDTO) {
-        this.deviceTypeDTO = deviceTypeDTO;
+    public void setDeviceTypeName(String deviceTypeName) {
+        this.deviceTypeName = deviceTypeName;
     }
 
-    public CustomerServiceDTO getCustomerServiceDTO() {
-        return customerServiceDTO;
+    public String getCustomerServiceName() {
+        return customerServiceName;
     }
 
-    public void setCustomerServiceDTO(CustomerServiceDTO customerServiceDTO) {
-        this.customerServiceDTO = customerServiceDTO;
+    public void setCustomerServiceName(String customerServiceName) {
+        this.customerServiceName = customerServiceName;
     }
 
     public BigDecimal getPrice() {
@@ -66,8 +72,10 @@ public class ServicePriceDTO {
 
     @Override
     public String toString() {
-        return ", Device Type= " + deviceTypeDTO +
-                ", Customer Service= " + customerServiceDTO +
-                ", Price= " + price;
+        return "{" +
+                "\"deviceTypeName\": \"" + deviceTypeName + '\"' +
+                ", \"customerServiceName\": \"" + customerServiceName + '\"' +
+                ", \"price\": \"" + price +
+                "\"}";
     }
 }

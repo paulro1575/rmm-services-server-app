@@ -33,7 +33,8 @@ public class ServicePrice {
     public ServicePrice() {
     }
 
-    public ServicePrice(Long id, @NotNull DeviceType deviceType, @NotNull CustomerService customerService, @NotNull BigDecimal price) {
+    public ServicePrice(Long id, @NotNull DeviceType deviceType, @NotNull CustomerService customerService,
+                        @NotNull BigDecimal price) {
         this.id = id;
         this.deviceType = deviceType;
         this.customerService = customerService;

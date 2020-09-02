@@ -3,6 +3,7 @@ package com.rmm.rmmservices.service.impl;
 import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
 import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
+import com.rmm.rmmservices.utils.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,18 +34,12 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
 
     @Override
     public CustomerService mapTo(CustomerServiceDTO dtoObject) {
-        CustomerService customerService = new CustomerService();
-        if (dtoObject.getId() != null) customerService.setId(dtoObject.getId());
-        customerService.setServiceName(dtoObject.getServiceName());
-        return customerService;
+        return MapperUtils.unmapCustomerService(dtoObject);
     }
 
     @Override
     public CustomerServiceDTO mapToDTO(CustomerService domainObject) {
-        CustomerServiceDTO customerServiceDTO = new CustomerServiceDTO();
-        if(domainObject.getId() != null) customerServiceDTO.setId(domainObject.getId());
-        customerServiceDTO.setServiceName(domainObject.getServiceName());
-        return customerServiceDTO;
+        return MapperUtils.mapCustomerService(domainObject);
     }
 
     @Override

@@ -27,7 +27,7 @@ import java.util.Optional;
 @Validated
 public class CustomerController {
 
-    @Autowired(required = true)
+    @Autowired
     @Qualifier("customerServiceImpl")
     private CustomerService<Customer, CustomerDTO> customerService;
 

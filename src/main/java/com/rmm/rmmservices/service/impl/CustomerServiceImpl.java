@@ -5,6 +5,7 @@ import com.rmm.rmmservices.model.dto.CustomerDTO;
 import com.rmm.rmmservices.model.persistence.entities.Customer;
 import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
 import com.rmm.rmmservices.service.CustomerService;
+import com.rmm.rmmservices.utils.MapperUtils;
 import com.rmm.rmmservices.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,21 +60,12 @@ public class CustomerServiceImpl implements CustomerService<Customer, CustomerDT
 
     @Override
     public Customer mapTo(CustomerDTO dtoObject) {
-        System.out.println(dtoObject.getId());
-        final Customer customer = new Customer();
-        if (dtoObject.getId() !=null) customer.setId(dtoObject.getId());
-        customer.setUsername(dtoObject.getUsername());
-        customer.setPassword(dtoObject.getPassword());
-        return customer;
+        return MapperUtils.unmapCustomer(dtoObject);
     }
 
     @Override
     public CustomerDTO mapToDTO(Customer domainObject) {
-        final CustomerDTO customerDto = new CustomerDTO();
-        if (domainObject.getId() !=null) customerDto.setId(domainObject.getId());
-        customerDto.setUsername(domainObject.getUsername());
-        customerDto.setPassword(domainObject.getPassword());
-        return customerDto;
+        return MapperUtils.mapCustomer(domainObject);
     }
 
     @Override

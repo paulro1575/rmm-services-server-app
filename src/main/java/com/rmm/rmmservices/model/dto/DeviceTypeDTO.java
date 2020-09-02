@@ -43,7 +43,7 @@ public class DeviceTypeDTO {
     @Override
     public String toString() {
         return "{" +
-                "\"typeName\": \"" + typeName + '\"' +
+                "\"typeName\": \"" + typeName + "\"" +
                 '}';
     }
 }

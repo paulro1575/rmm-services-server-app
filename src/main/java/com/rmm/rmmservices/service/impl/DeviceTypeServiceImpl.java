@@ -3,6 +3,7 @@ package com.rmm.rmmservices.service.impl;
 import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.model.persistence.repository.DeviceTypeRepository;
+import com.rmm.rmmservices.utils.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,18 +34,12 @@ public class DeviceTypeServiceImpl extends GeneralCRUDServiceImpl<DeviceType, De
 
     @Override
     public DeviceType mapTo(DeviceTypeDTO dtoObject) {
-        DeviceType deviceType = new DeviceType();
-        if (dtoObject.getId() != null) deviceType.setId(dtoObject.getId());
-        deviceType.setTypeName(dtoObject.getTypeName());
-        return deviceType;
+        return MapperUtils.unmapDeviceType(dtoObject);
     }
 
     @Override
     public DeviceTypeDTO mapToDTO(DeviceType domainObject) {
-        DeviceTypeDTO deviceTypeDTO = new DeviceTypeDTO();
-        if (domainObject.getId() != null) deviceTypeDTO.setId(domainObject.getId());
-        deviceTypeDTO.setTypeName(domainObject.getTypeName());
-        return deviceTypeDTO;
+        return MapperUtils.mapDeviceType(domainObject);
     }
 
     @Override

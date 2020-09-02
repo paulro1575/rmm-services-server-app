@@ -1,6 +1,5 @@
 package com.rmm.rmmservices.controller;
 
-import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
 import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.service.GeneralCRUDService;
@@ -44,9 +43,10 @@ public class CustomerServiceController extends GeneralCrudController<CustomerSer
         return super.findAll("id", Sort.Direction.ASC);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.DELETE,
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.DELETE,
             path = "/{service_id}")
-    public ResponseEntity<Object> delete(@PathVariable(name="service_id") Long serviceId) throws DatabaseException {
-        return super.delete(serviceId);
+    public ResponseEntity<Object> delete(@PathVariable(name="service_id") Long objectId) {
+        return super.delete(objectId);
     }
 }

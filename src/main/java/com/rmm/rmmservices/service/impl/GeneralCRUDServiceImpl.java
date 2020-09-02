@@ -25,7 +25,9 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
         try {
             final Optional<DOMAIN> domainObject = findExisting(dtoObject);
             if(!domainObject.isPresent()){
+                System.out.println("PARA GRABAR " + dtoObject.toString());
                 DOMAIN domain = mapTo(dtoObject);
+                System.out.println("PARA GRABAR domain" + domain.toString());
                 return this.repository.save(domain);
             } else {
                 throw new DatabaseException("The object already exists in the database");
