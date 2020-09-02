@@ -1,6 +1,7 @@
 package com.rmm.rmmservices.model.persistence.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * @author Paul Rodríguez-Ch
@@ -17,13 +18,18 @@ public class DeviceType {
     @Column(name = "type_name")
     private String typeName;
 
+    @Column(name = "device_price")
+    private BigDecimal devicePrice;
+
     public DeviceType() {
     }
 
     public DeviceType(Long id,
-                      String typeName) {
+                      String typeName,
+                      BigDecimal devicePrice) {
         this.id = id;
         this.typeName = typeName;
+        this.devicePrice = devicePrice;
     }
 
     public Long getId() {
@@ -42,11 +48,20 @@ public class DeviceType {
         this.typeName = typeName;
     }
 
+    public BigDecimal getDevicePrice() {
+        return devicePrice;
+    }
+
+    public void setDevicePrice(BigDecimal devicePrice) {
+        this.devicePrice = devicePrice;
+    }
+
     @Override
     public String toString() {
         return "DeviceType{" +
                 "id=" + id +
                 ", typeName='" + typeName + '\'' +
+                ", devicePrice=" + devicePrice +
                 '}';
     }
 }

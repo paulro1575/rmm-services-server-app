@@ -18,7 +18,7 @@ public class TestMapperUtils {
             "user",
             "$2a$10$4FxTu96Enm2l7aezce8bmebIlb.3rwyvtVTVUd0rFl9bT2YHq8TiS");
     static final CustomerService customerService = new CustomerService(1L, "Antivirus");
-    final DeviceType deviceType = new DeviceType(1L, "Mac");
+    final DeviceType deviceType = new DeviceType(1L, "Mac", new BigDecimal("4.00"));
     final Device device = new Device(1L, "USER-MAC", deviceType, customerService, customer);
     final ServicePrice servicePrice = new ServicePrice(1L, deviceType, customerService, new BigDecimal("5.00"));
 

@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.math.BigDecimal;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,7 +36,7 @@ public class TestDeviceTypeController {
     @InjectMocks
     static DeviceTypeController deviceTypeController;
 
-    DeviceTypeDTO deviceTypeDTO = new DeviceTypeDTO(null, "NewDeviceTypeName");
+    DeviceTypeDTO deviceTypeDTO = new DeviceTypeDTO(null, "NewDeviceTypeName", new BigDecimal("4.00"));
 
     @BeforeEach
     public void setUp(){

@@ -44,6 +44,7 @@ public final class MapperUtils {
         DeviceTypeDTO deviceTypeDTO = new DeviceTypeDTO();
         if(deviceType.getId() != null) deviceTypeDTO.setId(deviceType.getId());
         deviceTypeDTO.setTypeName(deviceType.getTypeName());
+        deviceTypeDTO.setDevicePrice(deviceType.getDevicePrice());
         return deviceTypeDTO;
     }
 
@@ -56,6 +57,7 @@ public final class MapperUtils {
         DeviceType deviceType = new DeviceType();
         if(deviceTypeDTO.getId() != null) deviceType.setId(deviceTypeDTO.getId());
         deviceType.setTypeName(deviceTypeDTO.getTypeName());
+        deviceType.setDevicePrice(deviceTypeDTO.getDevicePrice());
         return deviceType;
     }
 
