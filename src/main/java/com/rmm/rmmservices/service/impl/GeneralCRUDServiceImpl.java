@@ -47,7 +47,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
         try {
             repository.deleteById(id);
         } catch (Exception exception){
-            LOGGER.warn(String.format("Couldn't add object to database due the error: ", exception.getMessage()));
+            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", exception.getMessage()));
             throw new DatabaseException(String.format("The object %s not exists into database", id));
         }
     }

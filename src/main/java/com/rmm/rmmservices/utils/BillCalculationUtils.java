@@ -1,6 +1,6 @@
 package com.rmm.rmmservices.utils;
 
-import com.rmm.rmmservices.model.dto.CostPerDeviceDTO;
+import com.rmm.rmmservices.model.dto.CostPerServiceDTO;
 import com.rmm.rmmservices.model.dto.CustomerDevicesCalculationDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,13 +67,13 @@ public class BillCalculationUtils {
      * @param servicesList services List of objects
      * @return List of CostPerDeviceDto
      */
-    private static List<CostPerDeviceDTO> getListCostPerDeviceDto(Map<String, BigDecimal> servicesList) {
-        List<CostPerDeviceDTO> costPerDeviceDTOS = new ArrayList<>();
+    private static List<CostPerServiceDTO> getListCostPerDeviceDto(Map<String, BigDecimal> servicesList) {
+        List<CostPerServiceDTO> costPerServiceDTOS = new ArrayList<>();
         for (Map.Entry<String, BigDecimal> object : servicesList.entrySet()) {
-            CostPerDeviceDTO costPerDeviceDTO = new CostPerDeviceDTO(object.getKey(), object.getValue());
-            costPerDeviceDTOS.add(costPerDeviceDTO);
+            CostPerServiceDTO costPerServiceDTO = new CostPerServiceDTO(object.getKey(), object.getValue());
+            costPerServiceDTOS.add(costPerServiceDTO);
         }
-        return costPerDeviceDTOS;
+        return costPerServiceDTOS;
     }
 
     /**

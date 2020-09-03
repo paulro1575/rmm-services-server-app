@@ -5,15 +5,15 @@ import java.math.BigDecimal;
 /**
  * @author Paul Rodríguez-Ch
  */
-public class CostPerDeviceDTO {
+public class CostPerServiceDTO {
 
     public String service;
     public BigDecimal monthlyCost;
 
-    public CostPerDeviceDTO() {
+    public CostPerServiceDTO() {
     }
 
-    public CostPerDeviceDTO(String service, BigDecimal monthlyCost) {
+    public CostPerServiceDTO(String service, BigDecimal monthlyCost) {
         this.service = service;
         this.monthlyCost = monthlyCost;
     }
@@ -33,4 +33,5 @@ public class CostPerDeviceDTO {
     public void setMonthlyCost(BigDecimal monthlyCost) {
         this.monthlyCost = monthlyCost;
     }
+
 }

@@ -9,12 +9,12 @@ import java.util.List;
 public class CustomerDevicesCalculationDTO {
 
     private BigDecimal output;
-    private List<CostPerDeviceDTO> explanation;
+    private List<CostPerServiceDTO> explanation;
 
     public CustomerDevicesCalculationDTO() {
     }
 
-    public CustomerDevicesCalculationDTO(BigDecimal output, List<CostPerDeviceDTO> explanation) {
+    public CustomerDevicesCalculationDTO(BigDecimal output, List<CostPerServiceDTO> explanation) {
         this.output = output;
         this.explanation = explanation;
     }
@@ -27,11 +27,11 @@ public class CustomerDevicesCalculationDTO {
         this.output = output;
     }
 
-    public List<CostPerDeviceDTO> getExplanation() {
+    public List<CostPerServiceDTO> getExplanation() {
         return explanation;
     }
 
-    public void setExplanation(List<CostPerDeviceDTO> explanation) {
+    public void setExplanation(List<CostPerServiceDTO> explanation) {
         this.explanation = explanation;
     }
 

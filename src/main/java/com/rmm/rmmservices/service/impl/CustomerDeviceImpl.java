@@ -7,7 +7,6 @@ import com.rmm.rmmservices.model.persistence.entities.Device;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.model.persistence.repository.CustomerDeviceRepository;
 import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
-import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.model.persistence.repository.DeviceTypeRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
 import org.slf4j.Logger;
@@ -27,8 +26,6 @@ public class CustomerDeviceImpl extends GeneralCRUDServiceImpl<Device, DeviceDTO
     private CustomerDeviceRepository customerDeviceRepository;
     @Autowired
     private DeviceTypeRepository deviceTypeRepository;
-    @Autowired
-    private CustomerServiceRepository customerServiceRepository;
     @Autowired
     private CustomerRepository customerRepository;
     private final Logger LOGGER = LoggerFactory.getLogger(CustomerDeviceImpl.class);
