@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
 
 /**
+ * This class manages some API Exceptions
  * @author Paul Rodríguez-Ch
  */
 public class ApiResponseException {

@@ -43,7 +43,7 @@ class TestCustomerController {
 
     @Test
     public void testCustomerCreation() throws Exception {
-        this.mockMvc.perform(post("/customer/")
+        this.mockMvc.perform(post("/customer/register/")
                 .content(customerDTO.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -52,7 +52,7 @@ class TestCustomerController {
 
     @Test
     public void testCustomerCreationValidation() throws Exception {
-        this.mockMvc.perform(post("/customer/")
+        this.mockMvc.perform(post("/customer/register")
                 .content("{\"username\": \"" + "" +
                         "\",\"password\": \"" + customerDTO.getPassword() +
                         "\" }")

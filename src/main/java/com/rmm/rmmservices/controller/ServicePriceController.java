@@ -1,7 +1,7 @@
 package com.rmm.rmmservices.controller;
 
-import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
+import com.rmm.rmmservices.model.dto.ServicePriceDTO;
+import com.rmm.rmmservices.model.persistence.entities.ServicePrice;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,19 +17,19 @@ import javax.validation.Valid;
  * @author Paul Rodríguez-Ch
  */
 @RestController
-@RequestMapping(value = "/customer/service/")
+@RequestMapping(value = "/service/price/")
 @Validated
-public class CustomerServiceController extends GeneralCrudController<CustomerService, CustomerServiceDTO>{
+public class ServicePriceController extends GeneralCrudController<ServicePrice, ServicePriceDTO>{
 
     @Autowired
-    @Qualifier("customerServicesServiceImpl")
-    private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesServiceImpl;
+    @Qualifier("servicePriceServiceImpl")
+    private GeneralCRUDService<ServicePrice, ServicePriceDTO> servicePriceService;
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
             path="/")
-    public ResponseEntity<Object> create(@Valid @RequestBody CustomerServiceDTO customerServiceDTO) throws Exception {
-        return super.create(customerServiceDTO);
+    public ResponseEntity<Object> create(@Valid @RequestBody ServicePriceDTO servicePriceDTO) throws Exception {
+        return super.create(servicePriceDTO);
     }
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
@@ -41,8 +41,8 @@ public class CustomerServiceController extends GeneralCrudController<CustomerSer
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.DELETE,
-            path = "/{service_id}")
-    public ResponseEntity<Object> delete(@PathVariable(name="service_id") Long objectId) {
+            path = "/{service_price_id}")
+    public ResponseEntity<Object> delete(@PathVariable(name="service_price_id") Long objectId) {
         return super.delete(objectId);
     }
 }

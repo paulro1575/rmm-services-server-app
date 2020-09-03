@@ -1,8 +1,10 @@
 package com.rmm.rmmservices.model.dto;
 
+import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 
 import javax.validation.constraints.NotEmpty;
+import java.math.BigDecimal;
 
 /**
  * @author Paul Rodríguez-Ch
@@ -12,14 +14,20 @@ public class DeviceTypeDTO {
     @Nullable
     private Long id;
     @NotEmpty
-    private String deviceType;
+    @NotNull
+    private String typeName;
+    @NotNull
+    private BigDecimal devicePrice;
 
     public DeviceTypeDTO() {
     }
 
-    public DeviceTypeDTO(Long id, @NotEmpty String deviceType) {
+    public DeviceTypeDTO(Long id,
+                         @NotEmpty @NotNull String typeName,
+                         @NotNull BigDecimal devicePrice) {
         this.id = id;
-        this.deviceType = deviceType;
+        this.typeName = typeName;
+        this.devicePrice = devicePrice;
     }
 
     public Long getId() {
@@ -30,16 +38,27 @@ public class DeviceTypeDTO {
         this.id = id;
     }
 
-    public String getDeviceType() {
-        return deviceType;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public BigDecimal getDevicePrice() {
+        return devicePrice;
+    }
+
+    public void setDevicePrice(BigDecimal devicePrice) {
+        this.devicePrice = devicePrice;
     }
 
     @Override
     public String toString() {
-        return "Device Type: " + deviceType;
+        return "{" +
+                "\"typeName\": \"" + typeName + "\"" +
+                ", \"devicePrice\": \"" + devicePrice +
+                "\"}";
     }
 }

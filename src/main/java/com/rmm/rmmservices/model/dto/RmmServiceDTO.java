@@ -8,22 +8,20 @@ import javax.validation.constraints.NotEmpty;
 /**
  * @author Paul Rodríguez-Ch
  */
-public class CustomerServiceDTO {
+public class RmmServiceDTO {
 
     @Nullable
     private Long id;
-    @NotNull
-    private Long customerId;
+
     @NotNull
     @NotEmpty
     private String serviceName;
 
-    public CustomerServiceDTO() {
+    public RmmServiceDTO() {
     }
 
-    public CustomerServiceDTO(Long id, @NotNull Long customerId, @NotNull String serviceName) {
+    public RmmServiceDTO(Long id, @NotEmpty String serviceName) {
         this.id = id;
-        this.customerId = customerId;
         this.serviceName = serviceName;
     }
 
@@ -33,14 +31,6 @@ public class CustomerServiceDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
     }
 
     public String getServiceName() {
@@ -54,8 +44,8 @@ public class CustomerServiceDTO {
     @Override
     public String toString() {
         return "{" +
-                "\"customer_id\": \"" + customerId +
-                "\", \"ServiceName\": \"" + serviceName + "\"" +
+                "\"id\": \"" + id +
+                "\", \"serviceName\": \"" + serviceName + '\"' +
                 '}';
     }
 }

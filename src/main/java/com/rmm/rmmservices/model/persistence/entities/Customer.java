@@ -20,7 +20,9 @@ public class Customer {
     @Column
     private String password;
 
-    public Customer(long id, String username, String password) {
+    public Customer(Long id,
+                    String username,
+                    String password) {
         this.id = id;
         this.username = username;
         this.password = password;

@@ -1,10 +1,7 @@
 package com.rmm.rmmservices.model.dto;
 
-import com.rmm.rmmservices.model.persistence.entities.Customer;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
-
-import java.util.Date;
 
 /**
  * @author Paul Rodríguez-Ch
@@ -15,22 +12,22 @@ public class DeviceDTO {
     private Long id;
 
     @NotNull
-    private DeviceTypeDTO deviceTypeDTO;
+    private String systemName;
 
     @NotNull
-    private Customer customer;
+    private String deviceTypeName;
 
-    @Nullable
-    private Date initialDate;
+    @NotNull
+    private Long customerId;
 
     public DeviceDTO() {
     }
 
-    public DeviceDTO(Long id, DeviceTypeDTO deviceTypeDTO, Customer customer, Date initialDate) {
+    public DeviceDTO(Long id, String systemName, String deviceTypeName, Long customerId) {
         this.id = id;
-        this.deviceTypeDTO = deviceTypeDTO;
-        this.customer = customer;
-        this.initialDate = initialDate;
+        this.systemName = systemName;
+        this.deviceTypeName = deviceTypeName;
+        this.customerId = customerId;
     }
 
     public Long getId() {
@@ -41,33 +38,36 @@ public class DeviceDTO {
         this.id = id;
     }
 
-    public DeviceTypeDTO getDeviceTypeDTO() {
-        return deviceTypeDTO;
+    public String getSystemName() {
+        return systemName;
     }
 
-    public void setDeviceTypeDTO(DeviceTypeDTO deviceTypeDTO) {
-        this.deviceTypeDTO = deviceTypeDTO;
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getDeviceTypeName() {
+        return deviceTypeName;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setDeviceTypeName(String deviceTypeName) {
+        this.deviceTypeName = deviceTypeName;
     }
 
-    public Date getInitialDate() {
-        return initialDate;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setInitialDate(Date initialDate) {
-        this.initialDate = initialDate;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     @Override
     public String toString() {
-        return "Device Type: " + deviceTypeDTO +
-                ", Cuystomer " +  customer;
+        return "{" +
+                "\"systemName\": \"" + systemName + "\"" +
+                ", \"deviceTypeName\": \"" + deviceTypeName + "\"" +
+                ", \"customerId\": \"" + customerId +
+                "\"}";
     }
 }

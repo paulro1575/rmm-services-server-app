@@ -1,7 +1,7 @@
 package com.rmm.rmmservices.controller;
 
-import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
+import com.rmm.rmmservices.model.dto.RmmServiceDTO;
+import com.rmm.rmmservices.model.persistence.entities.RmmService;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,19 +17,29 @@ import javax.validation.Valid;
  * @author Paul Rodríguez-Ch
  */
 @RestController
-@RequestMapping(value = "/customer/service/")
+@RequestMapping(value = "/service/")
 @Validated
-public class CustomerServiceController extends GeneralCrudController<CustomerService, CustomerServiceDTO>{
+public class RmmServiceController extends GeneralCrudController<RmmService, RmmServiceDTO> {
 
     @Autowired
-    @Qualifier("customerServicesServiceImpl")
-    private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesServiceImpl;
+    @Qualifier("rmmServicesServiceImpl")
+    private GeneralCRUDService<RmmService, RmmServiceDTO> rmmServicesServiceImpl;
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
             path="/")
-    public ResponseEntity<Object> create(@Valid @RequestBody CustomerServiceDTO customerServiceDTO) throws Exception {
-        return super.create(customerServiceDTO);
+    public ResponseEntity<Object> create(@Valid @RequestBody RmmServiceDTO rmmServiceDTO) throws Exception {
+        return super.create(rmmServiceDTO);
+    }
+
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.PUT,
+            path="/{service_id}")
+    public ResponseEntity<Object> update(
+            @PathVariable(name="service_id") Long rmmServiceId,
+            @Valid @RequestBody RmmServiceDTO rmmServiceDTO
+    ) throws Exception {
+        return super.update(rmmServiceId, rmmServiceDTO);
     }
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},

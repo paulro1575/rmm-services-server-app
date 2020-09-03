@@ -1,7 +1,6 @@
 package com.rmm.rmmservices.model.persistence.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -16,27 +15,27 @@ public class ServicePrice {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "device_type_id", referencedColumnName = "id")
     private DeviceType deviceType;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private CustomerService customerService;
+    private RmmService rmmService;
 
-    @NotNull
     @Column(name = "price")
     private BigDecimal price;
 
     public ServicePrice() {
     }
 
-    public ServicePrice(Long id, @NotNull DeviceType deviceType, @NotNull CustomerService customerService, @NotNull BigDecimal price) {
+    public ServicePrice(Long id,
+                        DeviceType deviceType,
+                        RmmService rmmService,
+                        BigDecimal price) {
         this.id = id;
         this.deviceType = deviceType;
-        this.customerService = customerService;
+        this.rmmService = rmmService;
         this.price = price;
     }
 
@@ -56,12 +55,12 @@ public class ServicePrice {
         this.deviceType = deviceType;
     }
 
-    public CustomerService getCustomerService() {
-        return customerService;
+    public RmmService getRmmService() {
+        return rmmService;
     }
 
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
+    public void setRmmService(RmmService rmmService) {
+        this.rmmService = rmmService;
     }
 
     public BigDecimal getPrice() {
@@ -77,7 +76,7 @@ public class ServicePrice {
         return "ServicePrice{" +
                 "id=" + id +
                 ", deviceType=" + deviceType +
-                ", customerService=" + customerService +
+                ", customerService=" + rmmService +
                 ", price=" + price +
                 '}';
     }

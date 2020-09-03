@@ -27,7 +27,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleDatabaseException(DatabaseException databaseException) {
         ApiResponseException apiResponseException = new ApiResponseException(databaseException.getMessage(),
                 HttpStatus.BAD_REQUEST);
-        LOGGER.error(databaseException.getMessage());
+        LOGGER.warn(databaseException.getMessage());
         return new ResponseEntity<>(apiResponseException, ResponseEntityHeaderUtils.getJsonContentTypeHeaders(),
                 apiResponseException.getHttpStatus());
     }
@@ -41,7 +41,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleValidationException(NoSuchElementException noSuchElementException) {
         ApiResponseException apiResponseException = new ApiResponseException("Object was not found into database",
                 HttpStatus.NOT_FOUND);
-        LOGGER.error(noSuchElementException.getMessage());
+        LOGGER.warn(noSuchElementException.getMessage());
         return new ResponseEntity<>(apiResponseException, ResponseEntityHeaderUtils.getJsonContentTypeHeaders(),
                 apiResponseException.getHttpStatus());
     }
