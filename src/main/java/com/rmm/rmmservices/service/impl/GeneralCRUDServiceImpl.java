@@ -3,6 +3,7 @@ package com.rmm.rmmservices.service.impl;
 import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,8 +21,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
 
     @Autowired
     private JpaRepository<DOMAIN, Long> repository;
-
-    private Logger LOGGER;
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public DOMAIN create(DTO dtoObject) throws DatabaseException {
@@ -35,6 +35,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
                 throw new DatabaseException("The object already exists into database");
             }
         } catch(Exception ex) {
+            System.out.println("WE" + ex.getMessage());
             LOGGER.warn(String.format("Couldn't add object to database due the error: %s", ex.getMessage()));
             if(ex instanceof DatabaseException) throw ex;
             else throw new DatabaseException("Some objects doesn't exist into database");

@@ -22,10 +22,6 @@ public class Device {
     private DeviceType deviceType;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private CustomerService customerService;
-
-    @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
@@ -35,12 +31,10 @@ public class Device {
     public Device(Long id,
                   String systemName,
                   DeviceType deviceType,
-                  CustomerService customerService,
                   Customer customer) {
         this.id = id;
         this.systemName = systemName;
         this.deviceType = deviceType;
-        this.customerService = customerService;
         this.customer = customer;
     }
 
@@ -68,14 +62,6 @@ public class Device {
         this.deviceType = deviceType;
     }
 
-    public CustomerService getCustomerService() {
-        return customerService;
-    }
-
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
@@ -90,7 +76,6 @@ public class Device {
                 "id=" + id +
                 ", systemName='" + systemName + '\'' +
                 ", deviceType=" + deviceType +
-                ", customerService=" + customerService +
                 ", customer=" + customer +
                 '}';
     }

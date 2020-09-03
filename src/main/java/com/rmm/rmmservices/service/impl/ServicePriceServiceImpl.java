@@ -1,11 +1,11 @@
 package com.rmm.rmmservices.service.impl;
 
 import com.rmm.rmmservices.model.dto.ServicePriceDTO;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
+import com.rmm.rmmservices.model.persistence.entities.RmmService;
 import com.rmm.rmmservices.model.persistence.entities.ServicePrice;
-import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.model.persistence.repository.DeviceTypeRepository;
+import com.rmm.rmmservices.model.persistence.repository.RmmServiceRepository;
 import com.rmm.rmmservices.model.persistence.repository.ServicePriceRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
     @Autowired
     private DeviceTypeRepository deviceTypeRepository;
     @Autowired
-    private CustomerServiceRepository customerServiceRepository;
+    private RmmServiceRepository rmmServiceRepository;
     private final Logger LOGGER = LoggerFactory.getLogger(ServicePriceServiceImpl.class);
 
     @Override
@@ -38,12 +38,12 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
     public ServicePrice mapTo(ServicePriceDTO dtoObject) {
         Optional<DeviceType> deviceType = this.deviceTypeRepository
                 .findByDeviceTypeName(dtoObject.getDeviceTypeName());
-        Optional<CustomerService> customerService = this.customerServiceRepository
-                .findByServiceName(dtoObject.getCustomerServiceName());
-        if(deviceType.isPresent() && customerService.isPresent()){
-            return MapperUtils.unmapServicePrice(dtoObject, deviceType.get(), customerService.get());
+        Optional<RmmService> rmmService = this.rmmServiceRepository
+                .findByRmmServiceName(dtoObject.getRmmServiceName());
+        if(deviceType.isPresent() && rmmService.isPresent()){
+            return MapperUtils.unmapServicePrice(dtoObject, deviceType.get(), rmmService.get());
         }
-        LOGGER.warn(String.format("ServicePrice %s some dependencies was not found into database",
+        LOGGER.warn(String.format("ServicePrice %s some dependencies was not found",
                 dtoObject.toString()));
         return null;
     }
@@ -56,6 +56,6 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
     @Override
     public Optional<ServicePrice> findExisting(ServicePriceDTO dtoObject) {
         return this.servicePriceRepository.findByDeviceTypeAndService(dtoObject.getDeviceTypeName(),
-                dtoObject.getCustomerServiceName());
+                dtoObject.getRmmServiceName());
     }
 }

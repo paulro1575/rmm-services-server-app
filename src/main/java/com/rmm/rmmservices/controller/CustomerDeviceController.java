@@ -27,12 +27,15 @@ public class CustomerDeviceController extends GeneralCrudController<Device, Devi
     @Qualifier("customerDeviceImpl")
     private GeneralCRUDService<Device, DeviceDTO> customerDeviceService;
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST, path="/")
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.POST,
+            path="/")
     public ResponseEntity<Object> create(@Valid @RequestBody DeviceDTO deviceDTO) throws Exception {
         return super.create(deviceDTO);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.PUT,
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.PUT,
             path="/{customer_device_id}")
     public ResponseEntity<Object> update(
             @PathVariable(name="customer_device_id") Long customerDeviceId,
@@ -41,7 +44,9 @@ public class CustomerDeviceController extends GeneralCrudController<Device, Devi
         return super.update(customerDeviceId, deviceDTO);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET, path="/")
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.GET,
+            path="/")
     public ResponseEntity<Object> findAll() throws Exception {
         return super.findAll("id", Sort.Direction.ASC);
     }

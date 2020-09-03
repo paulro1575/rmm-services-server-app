@@ -17,10 +17,10 @@ public class TestMapperUtils {
     static final Customer customer = new Customer(1L,
             "user",
             "$2a$10$4FxTu96Enm2l7aezce8bmebIlb.3rwyvtVTVUd0rFl9bT2YHq8TiS");
-    static final CustomerService customerService = new CustomerService(1L, "Antivirus");
+    static final RmmService rmmService = new RmmService(1L, "Antivirus");
     final DeviceType deviceType = new DeviceType(1L, "Mac", new BigDecimal("4.00"));
-    final Device device = new Device(1L, "USER-MAC", deviceType, customerService, customer);
-    final ServicePrice servicePrice = new ServicePrice(1L, deviceType, customerService, new BigDecimal("5.00"));
+    final Device device = new Device(1L, "USER-MAC", deviceType, customer);
+    final ServicePrice servicePrice = new ServicePrice(1L, deviceType, rmmService, new BigDecimal("5.00"));
 
 
     @Test
@@ -30,9 +30,9 @@ public class TestMapperUtils {
     }
 
     @Test
-    public void testCustomerServiceMappers(){
-        final CustomerServiceDTO customerServiceDTO = MapperUtils.mapCustomerService(customerService);
-        Assert.assertEquals(customerService.toString(), MapperUtils.unmapCustomerService(customerServiceDTO).toString());
+    public void testRmmServiceMappers(){
+        final RmmServiceDTO rmmServiceDTO = MapperUtils.mapRmmService(rmmService);
+        Assert.assertEquals(rmmService.toString(), MapperUtils.unmapRmmService(rmmServiceDTO).toString());
     }
 
     @Test
@@ -41,7 +41,6 @@ public class TestMapperUtils {
         final DeviceDTO deviceDTO = MapperUtils.mapCustomerDevice(device);
         Assert.assertEquals(device.toString(), MapperUtils.unmapsCustomerDevice(deviceDTO,
                 deviceType,
-                customerService,
                 customer).toString());
     }
 
@@ -55,6 +54,6 @@ public class TestMapperUtils {
     public void testServicePriceMapper(){
         final ServicePriceDTO servicePriceDTO = MapperUtils.mapServicePrice(servicePrice);
         Assert.assertEquals(servicePrice.toString(), MapperUtils.unmapServicePrice(servicePriceDTO,
-                deviceType, customerService).toString());
+                deviceType, rmmService).toString());
     }
 }

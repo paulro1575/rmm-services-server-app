@@ -37,7 +37,6 @@ public class TestCustomerDevicesController {
     DeviceDTO deviceDTO = new DeviceDTO(null,
             "User-PC",
             "Windows WorkStation",
-            "TeamViewer",
             1L);
 
     @BeforeEach

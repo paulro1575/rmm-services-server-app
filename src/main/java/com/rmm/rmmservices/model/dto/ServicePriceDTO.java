@@ -20,7 +20,7 @@ public class ServicePriceDTO {
 
     @NotNull
     @NotEmpty
-    private String customerServiceName;
+    private String rmmServiceName;
 
     @NotNull
     private BigDecimal price;
@@ -30,11 +30,11 @@ public class ServicePriceDTO {
 
     public ServicePriceDTO(Long id,
                            @NotNull @NotEmpty String deviceTypeName,
-                           @NotNull @NotEmpty String customerServiceName,
+                           @NotNull @NotEmpty String rmmServiceName,
                            @NotNull @NotEmpty BigDecimal price) {
         this.id = id;
         this.deviceTypeName = deviceTypeName;
-        this.customerServiceName = customerServiceName;
+        this.rmmServiceName = rmmServiceName;
         this.price = price;
     }
 
@@ -54,12 +54,12 @@ public class ServicePriceDTO {
         this.deviceTypeName = deviceTypeName;
     }
 
-    public String getCustomerServiceName() {
-        return customerServiceName;
+    public String getRmmServiceName() {
+        return rmmServiceName;
     }
 
-    public void setCustomerServiceName(String customerServiceName) {
-        this.customerServiceName = customerServiceName;
+    public void setRmmServiceName(String rmmServiceName) {
+        this.rmmServiceName = rmmServiceName;
     }
 
     public BigDecimal getPrice() {
@@ -74,7 +74,7 @@ public class ServicePriceDTO {
     public String toString() {
         return "{" +
                 "\"deviceTypeName\": \"" + deviceTypeName + '\"' +
-                ", \"customerServiceName\": \"" + customerServiceName + '\"' +
+                ", \"rmmServiceName\": \"" + rmmServiceName + '\"' +
                 ", \"price\": \"" + price +
                 "\"}";
     }

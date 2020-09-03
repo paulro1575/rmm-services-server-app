@@ -26,12 +26,16 @@ public class DeviceTypeController extends GeneralCrudController<DeviceType, Devi
     @Qualifier("deviceTypeServiceImpl")
     private GeneralCRUDService<DeviceType, DeviceTypeDTO> deviceTypeService;
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST, path="/")
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.POST,
+            path="/")
     public ResponseEntity<Object> create(@Valid @RequestBody DeviceTypeDTO deviceTypeDTO) throws Exception {
         return super.create(deviceTypeDTO);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.PUT, path="/{device_type_id}")
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.PUT,
+            path="/{device_type_id}")
     public ResponseEntity<Object> update(
             @PathVariable(name="device_type_id") Long deviceTypeId,
             @Valid @RequestBody DeviceTypeDTO deviceTypeDTO
@@ -39,12 +43,15 @@ public class DeviceTypeController extends GeneralCrudController<DeviceType, Devi
         return super.update(deviceTypeId, deviceTypeDTO);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET, path="/")
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.GET,
+            path="/")
     public ResponseEntity<Object> findAll() throws Exception {
         return super.findAll("id", Sort.Direction.ASC);
     }
 
-    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.DELETE,
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.DELETE,
             path = "/{device_type_id}")
     public ResponseEntity<Object> delete(@PathVariable(name="device_type_id") Long deviceTypeId)
             throws DatabaseException {

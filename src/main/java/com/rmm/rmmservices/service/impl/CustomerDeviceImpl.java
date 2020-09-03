@@ -3,7 +3,6 @@ package com.rmm.rmmservices.service.impl;
 import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.model.dto.DeviceDTO;
 import com.rmm.rmmservices.model.persistence.entities.Customer;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.model.persistence.entities.Device;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.model.persistence.repository.CustomerDeviceRepository;
@@ -59,30 +58,30 @@ public class CustomerDeviceImpl extends GeneralCRUDServiceImpl<Device, DeviceDTO
         }
     }
 
+
     @Override
     public Device mapTo(DeviceDTO dtoObject) {
         Optional<DeviceType> deviceType = this.deviceTypeRepository
                 .findByDeviceTypeName(dtoObject.getDeviceTypeName());
-        Optional<CustomerService> customerService = this.customerServiceRepository
-                .findByServiceName(dtoObject.getServiceName());
         Optional<Customer>customer = this.customerRepository.findById(dtoObject.getCustomerId());
-        if(deviceType.isPresent() && customerService.isPresent() && customer.isPresent()){
-            return MapperUtils.unmapsCustomerDevice(dtoObject, deviceType.get(),customerService.get(),customer.get());
+        if(deviceType.isPresent() && customer.isPresent()){
+            return MapperUtils.unmapsCustomerDevice(dtoObject, deviceType.get(),customer.get());
         }
         LOGGER.warn(String.format("The next object has non existing dependencies into database: %s", dtoObject));
         return null;
     }
+
 
     @Override
     public DeviceDTO mapToDTO(Device domainObject) {
         return MapperUtils.mapCustomerDevice(domainObject);
     }
 
+    
     @Override
     public Optional<Device> findExisting(DeviceDTO dtoObject) {
-        return this.customerDeviceRepository.findExistingServiceIntoDevicePerCustomer(dtoObject.getSystemName(),
+        return this.customerDeviceRepository.findExistingDevicePerCustomer(dtoObject.getSystemName(),
                 dtoObject.getDeviceTypeName(),
-                dtoObject.getServiceName(),
                 dtoObject.getCustomerId());
     }
 }

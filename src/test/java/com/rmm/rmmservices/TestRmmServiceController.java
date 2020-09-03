@@ -1,7 +1,8 @@
 package com.rmm.rmmservices;
 
-import com.rmm.rmmservices.controller.CustomerServiceController;
+import com.rmm.rmmservices.controller.RmmServiceController;
 import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
+import com.rmm.rmmservices.model.dto.RmmServiceDTO;
 import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,31 +21,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * This class test the Customer Services Controller REST Methods
+ * This class test the Rmm Services Controller REST Methods
  * @author Paul Rodríguez-Ch
  */
 @RunWith(MockitoJUnitRunner.class)
-class TestCustomerServiceController {
+class TestRmmServiceController {
 
     private MockMvc mockMvc;
 
     @Mock
     private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesService;
     @InjectMocks
-    static CustomerServiceController customerServiceController;
+    static RmmServiceController rmmServiceController;
 
-    CustomerServiceDTO customerServiceDTO = new CustomerServiceDTO(null, "NewService");
+    RmmServiceDTO rmmServiceDTO = new RmmServiceDTO(null, "NewService");
 
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(customerServiceController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(rmmServiceController).build();
     }
 
     @Test
     public void testCustomerServiceCreation() throws Exception {
         this.mockMvc.perform(post("/service/")
-                .content(customerServiceDTO.toString())
+                .content(rmmServiceDTO.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

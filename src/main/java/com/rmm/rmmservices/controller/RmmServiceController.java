@@ -1,7 +1,7 @@
 package com.rmm.rmmservices.controller;
 
-import com.rmm.rmmservices.model.dto.ServicePriceDTO;
-import com.rmm.rmmservices.model.persistence.entities.ServicePrice;
+import com.rmm.rmmservices.model.dto.RmmServiceDTO;
+import com.rmm.rmmservices.model.persistence.entities.RmmService;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,19 +17,29 @@ import javax.validation.Valid;
  * @author Paul Rodríguez-Ch
  */
 @RestController
-@RequestMapping(value = "/service/price/")
+@RequestMapping(value = "/service/")
 @Validated
-public class ServicePriceController extends GeneralCrudController<ServicePrice, ServicePriceDTO>{
+public class RmmServiceController extends GeneralCrudController<RmmService, RmmServiceDTO> {
 
     @Autowired
-    @Qualifier("servicePriceServiceImpl")
-    private GeneralCRUDService<ServicePrice, ServicePriceDTO> servicePriceService;
+    @Qualifier("rmmServicesServiceImpl")
+    private GeneralCRUDService<RmmService, RmmServiceDTO> rmmServicesServiceImpl;
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
             path="/")
-    public ResponseEntity<Object> create(@Valid @RequestBody ServicePriceDTO servicePriceDTO) throws Exception {
-        return super.create(servicePriceDTO);
+    public ResponseEntity<Object> create(@Valid @RequestBody RmmServiceDTO rmmServiceDTO) throws Exception {
+        return super.create(rmmServiceDTO);
+    }
+
+    @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
+            method = RequestMethod.PUT,
+            path="/{service_id}")
+    public ResponseEntity<Object> update(
+            @PathVariable(name="service_id") Long rmmServiceId,
+            @Valid @RequestBody RmmServiceDTO rmmServiceDTO
+    ) throws Exception {
+        return super.update(rmmServiceId, rmmServiceDTO);
     }
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
@@ -41,8 +51,8 @@ public class ServicePriceController extends GeneralCrudController<ServicePrice, 
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.DELETE,
-            path = "/{service_price_id}")
-    public ResponseEntity<Object> delete(@PathVariable(name="service_price_id") Long objectId) {
+            path = "/{service_id}")
+    public ResponseEntity<Object> delete(@PathVariable(name="service_id") Long objectId) {
         return super.delete(objectId);
     }
 }

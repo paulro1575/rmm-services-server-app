@@ -21,7 +21,7 @@ public class ServicePrice {
 
     @ManyToOne
     @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private CustomerService customerService;
+    private RmmService rmmService;
 
     @Column(name = "price")
     private BigDecimal price;
@@ -31,11 +31,11 @@ public class ServicePrice {
 
     public ServicePrice(Long id,
                         DeviceType deviceType,
-                        CustomerService customerService,
+                        RmmService rmmService,
                         BigDecimal price) {
         this.id = id;
         this.deviceType = deviceType;
-        this.customerService = customerService;
+        this.rmmService = rmmService;
         this.price = price;
     }
 
@@ -55,12 +55,12 @@ public class ServicePrice {
         this.deviceType = deviceType;
     }
 
-    public CustomerService getCustomerService() {
-        return customerService;
+    public RmmService getRmmService() {
+        return rmmService;
     }
 
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
+    public void setRmmService(RmmService rmmService) {
+        this.rmmService = rmmService;
     }
 
     public BigDecimal getPrice() {
@@ -76,7 +76,7 @@ public class ServicePrice {
         return "ServicePrice{" +
                 "id=" + id +
                 ", deviceType=" + deviceType +
-                ", customerService=" + customerService +
+                ", customerService=" + rmmService +
                 ", price=" + price +
                 '}';
     }

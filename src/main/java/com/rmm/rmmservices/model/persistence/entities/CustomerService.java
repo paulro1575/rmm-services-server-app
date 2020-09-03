@@ -5,24 +5,29 @@ import javax.persistence.*;
 /**
  * @author Paul Rodríguez-Ch
  */
-@Entity(name = "service")
-@Table(name = "service")
+@Entity(name = "customer_service")
+@Table(name = "customer_service")
 public class CustomerService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "service_name")
-    private String serviceName;
+    @ManyToOne
+    @JoinColumn (name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn (name = "service_id", referencedColumnName = "id")
+    private RmmService service;
 
     public CustomerService() {
     }
 
-    public CustomerService(Long id,
-                           String serviceName) {
+    public CustomerService(Long id, Customer customer, RmmService service) {
         this.id = id;
-        this.serviceName = serviceName;
+        this.customer = customer;
+        this.service = service;
     }
 
     public Long getId() {
@@ -33,19 +38,28 @@ public class CustomerService {
         this.id = id;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public RmmService getService() {
+        return service;
+    }
+
+    public void setService(RmmService service) {
+        this.service = service;
     }
 
     @Override
     public String toString() {
-        return "Service{" +
+        return "CustomerService{" +
                 "id=" + id +
-                ", serviceName='" + serviceName + '\'' +
+                ", customer=" + customer +
+                ", service=" + service +
                 '}';
     }
 }

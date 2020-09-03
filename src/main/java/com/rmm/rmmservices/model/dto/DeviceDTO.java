@@ -18,19 +18,15 @@ public class DeviceDTO {
     private String deviceTypeName;
 
     @NotNull
-    private String serviceName;
-
-    @NotNull
     private Long customerId;
 
     public DeviceDTO() {
     }
 
-    public DeviceDTO(Long id, String systemName, String deviceTypeName, String serviceName, Long customerId) {
+    public DeviceDTO(Long id, String systemName, String deviceTypeName, Long customerId) {
         this.id = id;
         this.systemName = systemName;
         this.deviceTypeName = deviceTypeName;
-        this.serviceName = serviceName;
         this.customerId = customerId;
     }
 
@@ -58,14 +54,6 @@ public class DeviceDTO {
         this.deviceTypeName = deviceTypeName;
     }
 
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
-
     public Long getCustomerId() {
         return customerId;
     }
@@ -79,7 +67,6 @@ public class DeviceDTO {
         return "{" +
                 "\"systemName\": \"" + systemName + "\"" +
                 ", \"deviceTypeName\": \"" + deviceTypeName + "\"" +
-                ", \"serviceName\": \"" + serviceName + "\"" +
                 ", \"customerId\": \"" + customerId +
                 "\"}";
     }
