@@ -1,5 +1,6 @@
 package com.rmm.rmmservices.service.impl;
 
+import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.model.dto.ServicePriceDTO;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.model.persistence.entities.RmmService;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,6 +33,16 @@ public class ServicePriceServiceImpl extends GeneralCRUDServiceImpl<ServicePrice
 
     @Override
     public ServicePriceDTO update(Long id, ServicePriceDTO dtoObject) throws Exception {
+        return null;
+    }
+
+    @Override
+    public void deleteByCustomer(Long id, String username) throws DatabaseException {
+
+    }
+
+    @Override
+    public List<ServicePriceDTO> findAll(String customerName) {
         return null;
     }
 

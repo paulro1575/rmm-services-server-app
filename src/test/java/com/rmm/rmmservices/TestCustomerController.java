@@ -3,7 +3,7 @@ package com.rmm.rmmservices;
 import com.rmm.rmmservices.controller.CustomerController;
 import com.rmm.rmmservices.model.dto.CustomerDTO;
 import com.rmm.rmmservices.model.persistence.entities.Customer;
-import com.rmm.rmmservices.service.CustomerService;
+import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ class TestCustomerController {
     private MockMvc mockMvc;
 
     @Mock
-    private CustomerService<Customer, CustomerDTO> customerService;
+    private GeneralCRUDService<Customer, CustomerDTO> customerService;
     @InjectMocks
     static CustomerController customerController;
 

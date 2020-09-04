@@ -21,9 +21,11 @@ import javax.validation.Valid;
 @Validated
 public class RmmServiceController extends GeneralCrudController<RmmService, RmmServiceDTO> {
 
+
     @Autowired
     @Qualifier("rmmServicesServiceImpl")
     private GeneralCRUDService<RmmService, RmmServiceDTO> rmmServicesServiceImpl;
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
@@ -31,6 +33,7 @@ public class RmmServiceController extends GeneralCrudController<RmmService, RmmS
     public ResponseEntity<Object> create(@Valid @RequestBody RmmServiceDTO rmmServiceDTO) throws Exception {
         return super.create(rmmServiceDTO);
     }
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.PUT,
@@ -42,12 +45,14 @@ public class RmmServiceController extends GeneralCrudController<RmmService, RmmS
         return super.update(rmmServiceId, rmmServiceDTO);
     }
 
+
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.GET,
             path="/")
     public ResponseEntity<Object> findAll() throws Exception {
         return super.findAll("id", Sort.Direction.ASC);
     }
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.DELETE,

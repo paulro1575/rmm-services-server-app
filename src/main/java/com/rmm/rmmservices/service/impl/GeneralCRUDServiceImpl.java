@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -24,31 +25,27 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public DOMAIN create(DTO dtoObject) throws DatabaseException {
+    public DOMAIN create(DTO dtoObject) throws DatabaseException, NoSuchElementException {
         try {
             final Optional<DOMAIN> domainObject = findExisting(dtoObject);
             if(!domainObject.isPresent()){
                 DOMAIN domain = mapTo(dtoObject);
                 return this.repository.save(domain);
             } else {
-                LOGGER.warn(String.format("The object %s already exists into database", domainObject.toString()));
                 throw new DatabaseException("The object already exists into database");
             }
         } catch(Exception ex) {
-            System.out.println("WE" + ex.getMessage());
-            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", ex.getMessage()));
             if(ex instanceof DatabaseException) throw ex;
-            else throw new DatabaseException("Some objects doesn't exist into database");
+            else throw new NoSuchElementException("Some objects doesn't exist into database");
         }
     }
 
     @Override
-    public void delete(Long id) throws DatabaseException {
+    public void delete(Long id) throws NoSuchElementException {
         try {
             repository.deleteById(id);
         } catch (Exception exception){
-            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", exception.getMessage()));
-            throw new DatabaseException(String.format("The object %s not exists into database", id));
+            throw new NoSuchElementException(String.format("The object %s was not found into database", id));
         }
     }
 

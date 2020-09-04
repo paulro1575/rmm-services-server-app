@@ -1,9 +1,8 @@
 package com.rmm.rmmservices;
 
 import com.rmm.rmmservices.controller.RmmServiceController;
-import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
 import com.rmm.rmmservices.model.dto.RmmServiceDTO;
-import com.rmm.rmmservices.model.persistence.entities.CustomerService;
+import com.rmm.rmmservices.model.persistence.entities.RmmService;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ class TestRmmServiceController {
     private MockMvc mockMvc;
 
     @Mock
-    private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesService;
+    private GeneralCRUDService<RmmService, RmmServiceDTO> rmmServicesService;
     @InjectMocks
     static RmmServiceController rmmServiceController;
 
@@ -43,7 +42,7 @@ class TestRmmServiceController {
     }
 
     @Test
-    public void testCustomerServiceCreation() throws Exception {
+    public void testRmmServiceCreation() throws Exception {
         this.mockMvc.perform(post("/service/")
                 .content(rmmServiceDTO.toString())
                 .contentType(MediaType.APPLICATION_JSON))
@@ -52,7 +51,7 @@ class TestRmmServiceController {
     }
 
     @Test
-    public void testCustomerServiceCreationValidation() throws Exception {
+    public void testRmmServiceCreationValidation() throws Exception {
         this.mockMvc.perform(post("/service/")
                 .content("{\"serviceName\": \"" + "" +
                         "\" }")
@@ -61,7 +60,7 @@ class TestRmmServiceController {
     }
 
     @Test
-    public void testCustomerServiceList() throws Exception {
+    public void testRmmServiceList() throws Exception {
         this.mockMvc.perform(get("/service/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -69,7 +68,7 @@ class TestRmmServiceController {
     }
 
     @Test
-    public void testCustomerServiceDelete() throws Exception {
+    public void testRmmServiceDelete() throws Exception {
         this.mockMvc.perform(delete("/service/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -33,7 +36,8 @@ public class CustomerDeviceImpl extends GeneralCRUDServiceImpl<Device, DeviceDTO
     @Override
     public DeviceDTO update(Long id, DeviceDTO dtoObject) throws DatabaseException {
         try {
-            final Optional<Device> optionalDevice = findById(id);
+            final Optional<Device> optionalDevice = this.customerDeviceRepository.findDevicePerIdAndCustomerId(id,
+                    dtoObject.getCustomerId());
             if(optionalDevice.isPresent()){
                 Device device = mapTo(dtoObject);
                 Optional<Device> newDevice = findExisting(dtoObject);
@@ -53,6 +57,30 @@ public class CustomerDeviceImpl extends GeneralCRUDServiceImpl<Device, DeviceDTO
             if(ex instanceof DatabaseException) throw ex;
             else throw new DatabaseException("Some objects doesn't exist into database");
         }
+    }
+
+    @Override
+    public void deleteByCustomer(Long id, String username) throws DatabaseException {
+        try {
+            Optional<Device> customerDevice = customerDeviceRepository.findByDeviceIdAndCustomerName(id, username);
+            if(customerDevice.isPresent()){
+                this.customerDeviceRepository.deleteByDeviceIdAndCustomer(id, username);
+            } else{
+                throw new NoSuchElementException(String.format("The object %s doesn't exists into database", id));
+            }
+        } catch (Exception exception){
+            if (exception instanceof NoSuchElementException) throw exception;
+            else throw new DatabaseException(String.format("Couldn't add object to database due the error: %s",
+                    exception.getMessage()));
+        }
+    }
+
+    @Override
+    public List<DeviceDTO> findAll(String customerName) {
+        final List<Device> allDevices = this.customerDeviceRepository.findDevicesPerCustomerName(customerName);
+        final List<DeviceDTO> allDevicesDTO = new ArrayList<>();
+        allDevices.forEach(domain -> allDevicesDTO.add(mapToDTO(domain)));
+        return allDevicesDTO;
     }
 
 

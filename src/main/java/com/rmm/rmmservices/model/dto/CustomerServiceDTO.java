@@ -12,7 +12,7 @@ public class CustomerServiceDTO {
 
     @Nullable
     private Long id;
-    @NotNull
+    @Nullable
     private Long customerId;
     @NotNull
     @NotEmpty
@@ -21,7 +21,7 @@ public class CustomerServiceDTO {
     public CustomerServiceDTO() {
     }
 
-    public CustomerServiceDTO(Long id, @NotNull Long customerId, @NotNull String serviceName) {
+    public CustomerServiceDTO(Long id, @Nullable Long customerId, @NotNull String serviceName) {
         this.id = id;
         this.customerId = customerId;
         this.serviceName = serviceName;

@@ -43,6 +43,13 @@ public class GeneralCrudController<DOMAIN, DTO> {
                 HttpStatus.OK);
     }
 
+    public ResponseEntity<Object> findAll(String customerName) throws Exception {
+        final List<DTO> customerServices = this.generalCRUDService.findAll(customerName);
+        return new ResponseEntity<>(customerServices,
+                ResponseEntityHeaderUtils.getJsonContentTypeHeaders(),
+                HttpStatus.OK);
+    }
+
     public ResponseEntity<Object> delete(Long objectId) throws DatabaseException {
         this.generalCRUDService.delete(objectId);
         return new ResponseEntity<>("{ \"result\": \"Object was deleted successfully\"}",
