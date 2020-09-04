@@ -9,8 +9,6 @@ import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
 import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.model.persistence.repository.RmmServiceRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,6 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
 
     @Autowired
     private RmmServiceRepository rmmServiceRepository;
-    private final Logger LOGGER = LoggerFactory.getLogger(CustomerServicesServiceImpl.class);
 
 
     @Override
@@ -44,25 +41,20 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
                     .findCustomerServicePerIdAndCustomerId(id, dtoObject.getCustomerId());
             if (optionalCustomerService.isPresent()) {
                 CustomerService customerService = mapTo(dtoObject);
-                Optional<CustomerService> newCustomerService = findExisting(dtoObject);
-                if (!newCustomerService.isPresent()) {
+                Optional<CustomerService> customerServiceToUpdate = findExisting(dtoObject);
+                if (!customerServiceToUpdate.isPresent()) {
                     customerService.setId(id);
                     return mapToDTO(this.customerServiceRepository.save(customerService));
                 } else {
-                    LOGGER.warn(String.format("The new object %s already exists into database",
-                            newCustomerService.toString()));
-                    throw new DatabaseException("The new object properties already exists into database");
+                    throw new DatabaseException("The object to be updated already exists into database");
                 }
             } else {
-                LOGGER.warn(String.format("Service %s not found into database",
-                        dtoObject.toString()));
-                throw new NoSuchElementException(String.format("Service: %S not found on the database",
+                throw new NoSuchElementException(String.format("Service %S not found on the database",
                         dtoObject.getServiceName()));
             }
         } catch(Exception ex) {
-            LOGGER.warn(String.format("Couldn't add object to database due the error: %s", ex.getMessage()));
             if(ex instanceof DatabaseException) throw ex;
-            else throw new DatabaseException("Some objects doesn't exist into database");
+            else throw new NoSuchElementException("Some objects doesn't exist into database");
         }
     }
 
@@ -75,7 +67,8 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
             if(customerService.isPresent()){
                 this.customerServiceRepository.deleteByServiceIdAndCustomer(id, username);
             } else{
-                throw new NoSuchElementException(String.format("The object %s doesn't exists into database", id));
+                throw new NoSuchElementException(String.format(
+                        "The Customer Service %s doesn't exists into database", id));
             }
         } catch (Exception exception){
             if (exception instanceof NoSuchElementException) throw exception;
@@ -102,7 +95,6 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
         if(rmmService.isPresent() && customer.isPresent()){
             return MapperUtils.unmapCustomerService(dtoObject, customer.get(), rmmService.get());
         }
-        LOGGER.warn(String.format("The next object has non existing dependencies into database: %s", dtoObject));
         return null;
     }
 
@@ -115,7 +107,7 @@ public class CustomerServicesServiceImpl extends GeneralCRUDServiceImpl<Customer
 
     @Override
     public Optional<CustomerService> findExisting(CustomerServiceDTO dtoObject) {
-        return customerServiceRepository.findByCustomerIdServiceNameA(dtoObject.getCustomerId(),
+        return customerServiceRepository.findByCustomerIdAndServiceName(dtoObject.getCustomerId(),
                 dtoObject.getServiceName());
     }
 }

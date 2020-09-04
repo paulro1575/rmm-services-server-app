@@ -4,7 +4,6 @@ import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
 import com.rmm.rmmservices.model.persistence.entities.Customer;
 import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
-import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import com.rmm.rmmservices.utils.CustomerCredentialsUtils;
 import com.rmm.rmmservices.utils.ResponseEntityHeaderUtils;
@@ -33,8 +32,7 @@ public class CustomerServiceController extends GeneralCrudController<CustomerSer
     private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesServiceImpl;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private CustomerServiceRepository customerServiceRepository;
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
@@ -47,6 +45,7 @@ public class CustomerServiceController extends GeneralCrudController<CustomerSer
         customer.ifPresent(value -> customerServiceDTO.setCustomerId(value.getId()));
         return super.create(customerServiceDTO);
     }
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.GET,

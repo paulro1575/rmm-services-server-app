@@ -16,7 +16,7 @@ public class DeviceTypeDTO {
     @NotEmpty
     @NotNull
     private String typeName;
-    @NotNull
+    @Nullable
     private BigDecimal devicePrice;
 
     public DeviceTypeDTO() {

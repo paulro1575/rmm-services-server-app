@@ -21,3 +21,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/rmmservices
     username: rmmuser
     password: rmm-user-2020
+
+config:
+  device-cost: 4.00
+

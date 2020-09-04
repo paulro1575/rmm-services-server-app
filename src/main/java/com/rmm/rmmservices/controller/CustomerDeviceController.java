@@ -30,8 +30,10 @@ public class CustomerDeviceController extends GeneralCrudController<Device, Devi
     @Autowired
     @Qualifier("customerDeviceImpl")
     private GeneralCRUDService<Device, DeviceDTO> customerDeviceService;
+
     @Autowired
     private CustomerRepository customerRepository;
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,

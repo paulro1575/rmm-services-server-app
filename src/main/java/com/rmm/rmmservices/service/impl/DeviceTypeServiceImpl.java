@@ -5,8 +5,6 @@ import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.model.persistence.repository.DeviceTypeRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,42 +20,52 @@ public class DeviceTypeServiceImpl extends GeneralCRUDServiceImpl<DeviceType, De
 
     @Autowired
     private DeviceTypeRepository deviceTypeRepository;
-    private final Logger LOGGER = LoggerFactory.getLogger(DeviceTypeServiceImpl.class);
+
 
     @Override
-    public DeviceTypeDTO update(Long id, DeviceTypeDTO dtoObject) throws Exception {
-        Optional<DeviceType> optionalDeviceType = this.deviceTypeRepository.findById(id);
-        if(optionalDeviceType.isPresent()){
-            DeviceType deviceType = optionalDeviceType.get();
-            deviceType.setTypeName(dtoObject.getTypeName());
-            return mapToDTO(this.deviceTypeRepository.save(deviceType));
+    public DeviceTypeDTO update(Long id, DeviceTypeDTO deviceTypeDto) throws DatabaseException, NoSuchElementException {
+        Optional<DeviceType> actualDeviceType = this.deviceTypeRepository.findById(id);
+        if(actualDeviceType.isPresent()){
+            Optional<DeviceType> deviceTypeToUpdate = this.deviceTypeRepository
+                    .findByDeviceTypeName(deviceTypeDto.getTypeName());
+            if(!deviceTypeToUpdate.isPresent()){
+                DeviceType deviceType = actualDeviceType.get();
+                deviceType.setTypeName(deviceTypeDto.getTypeName());
+                return mapToDTO(this.deviceTypeRepository.save(deviceType));
+            } else {
+                throw new DatabaseException(String.format("The device type %s already exists into database",
+                        deviceTypeDto.getTypeName()));
+            }
         } else {
-            LOGGER.warn(String.format("Service %s not found into database",
-                    dtoObject.toString()));
-            throw new NoSuchElementException(String.format("Service: %S not found on the database",
-                    dtoObject.getTypeName()));
+            throw new NoSuchElementException(String.format("Device Type %S was not found into database",
+                    deviceTypeDto.getTypeName()));
         }
     }
 
-    @Override
-    public void deleteByCustomer(Long id, String username) throws DatabaseException {
-
-    }
 
     @Override
-    public List<DeviceTypeDTO> findAll(String customerName) {
-        return null;
+    public void deleteByCustomer(Long id, String username) throws DatabaseException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("Unsupported Operation");
     }
+
+
+    @Override
+    public List<DeviceTypeDTO> findAll(String customerName) throws UnsupportedOperationException{
+        throw new UnsupportedOperationException("Unsupported Operation");
+    }
+
 
     @Override
     public DeviceType mapTo(DeviceTypeDTO dtoObject) {
         return MapperUtils.unmapDeviceType(dtoObject);
     }
 
+
     @Override
     public DeviceTypeDTO mapToDTO(DeviceType domainObject) {
         return MapperUtils.mapDeviceType(domainObject);
     }
+
 
     @Override
     public Optional<DeviceType> findExisting(DeviceTypeDTO dtoObject) {

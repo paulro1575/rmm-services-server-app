@@ -18,7 +18,7 @@ public interface CustomerServiceRepository extends JpaRepository<CustomerService
 
     @Query(value = "SELECT * FROM customer_service cs WHERE cs.customer_id = :customerId AND " +
             "cs.service_id = (SELECT s.id FROM service s WHERE s.service_name = :serviceName)", nativeQuery = true)
-    Optional<CustomerService> findByCustomerIdServiceNameA(Long customerId, String serviceName);
+    Optional<CustomerService> findByCustomerIdAndServiceName(Long customerId, String serviceName);
 
 
     @Query(value = "SELECT * FROM customer_service cs WHERE cs.id = :serviceId AND " +
@@ -31,9 +31,11 @@ public interface CustomerServiceRepository extends JpaRepository<CustomerService
             nativeQuery = true)
     List<CustomerService> findCustomerServicesPerCustomerName(String customerName);
 
+
     @Query(value = "SELECT * FROM customer_service cs WHERE d.id= :customerServiceId AND d.customer_id = :customerId",
             nativeQuery = true)
     Optional<CustomerService> findCustomerServicePerIdAndCustomerId(Long customerServiceId, Long customerId);
+
 
     @Query(value="select d.system_name, dt.type_name, s.service_name, sp.price\n" +
             "from device d, device_type dt, customer_service cs, service_price sp, service s\n" +
@@ -46,9 +48,11 @@ public interface CustomerServiceRepository extends JpaRepository<CustomerService
             "s.id = sp.service_id", nativeQuery = true)
     List<Object[]> listBillServicesPrice(Long customerId);
 
+
     @Query(value="select count(d.id) as devices, COALESCE(SUM(dt.device_price), 0) as devices_cost from device d, " +
             "device_type dt where d.customer_id = :customerId and d.device_type_id = dt.id", nativeQuery = true)
     List<Object[]> listBillDevicesPrice(Long customerId);
+
 
     @Transactional
     @Modifying(clearAutomatically = true)
