@@ -14,10 +14,10 @@ public class Customer {
     @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name="username")
     private String username;
 
-    @Column
+    @Column(name="password")
     private String password;
 
 

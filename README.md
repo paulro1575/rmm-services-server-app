@@ -94,13 +94,13 @@ docker exec -i {postgres_container_name} psql -U rmmuser -d rmmservices -a < db-
 
 ### DATABASE DATA
 
-This api exposes all endpoints for manage database data. However, there is a script to fill tables with test data and you can execute it with:
+This api exposes all endpoints for manage database. However, there is a script to fill tables with test data and you can execute it with:
 ```bash
 docker exec -i {docker_container_name} psql -U {postgres user} -d {database_name} -a < db-data.sql
 ```
-To fill database data with same credentials of this api you can execute:
+To fill database with the same credentials of this api you can execute:
 ```bash
-docker exec -i {postgres_container_name} psql -U rmmuser -d rmmservices -a < db-schema.sql
+docker exec -i {postgres_container_name} psql -U rmmuser -d rmmservices -a < db-data.sql
 ```
 > In this data, the default API user is `rmm-user` and the default password is `1234abcd`
 
@@ -150,7 +150,7 @@ The API exposes the next endpoints:
 The customer data has the next exposed endpoints:
  - **Register:** POST `http://{HOST}:{PORT}/rmmservices/customer/register`
  
- This method is public for all users. It registers a new customer into database, the request body should be:
+ This endpoint is public for all users. It registers a new customer into database, the request body should be:
  ```json
 {
 	"username": "new-user",
@@ -166,20 +166,20 @@ The customer data has the next exposed endpoints:
 ```
  - **Login:**  POST `http://{HOST}:{PORT}/rmmservices/login`
  
-This method is public, the customer can use it to sign in into API and get the JWT TOKEN. The request body should be:
+This endpoint is public, the customer can use it to sign in into API and get the JWT TOKEN. The request body should be:
 ```json
 {
   "id": 1,
   "username": "new-user"
 }
 ```
-The response should be `200 OK` status code with no response body, but 1 header value named token. The token is needed to be used in private endpoints requests.
+The response should be `200 OK` status code with no response body, but 1 header value named token. The token will be used in private endpoints requests.
 
 ####  Service
  
  - **Create Service:** POST `http://{HOST}:{PORT}/rmmservices/service/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It saves a Service into database, the request body should be:
  ```json
 {
@@ -196,7 +196,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **Update Service:** PUT `http://{HOST}:{PORT}/rmmservices/service/{service-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It updates a Service into database, the request body should be:
  ```json
 {
@@ -213,7 +213,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **List services:** GET `http://{HOST}:{PORT}/rmmservices/service/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It shows all services existed into database, request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 [
@@ -237,7 +237,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 ```
  - **Delete Service:** DELETE `http://{HOST}:{PORT}/rmmservices/service/{service-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It deletes a Service into database, the request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 {
@@ -249,7 +249,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
  
  - **Create Device Type:** POST `http://{HOST}:{PORT}/rmmservices/device-type/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It saves a Device Type into database, the request body should be:
  ```json
 {
@@ -267,7 +267,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **Update Device Type:** PUT `http://{HOST}:{PORT}/rmmservices/device-type/{device-type-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It updates a Device Type into database, the request body should be:
  ```json
 {
@@ -285,7 +285,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **List Device Type:** GET `http://{HOST}:{PORT}/rmmservices/device-type/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It shows all device types existed into database, request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 [
@@ -308,7 +308,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 ```
  - **Delete Device Type:** DELETE `http://{HOST}:{PORT}/rmmservices/device-type/{device-type-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It deletes a Device Type into database, the request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 {
@@ -320,7 +320,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
  
  - **Create Service Price:** POST `http://{HOST}:{PORT}/rmmservices/service/price/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It saves a price for a device type into database, the request body should be:
  ```json
 {
@@ -341,7 +341,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **List Service Price:** GET `http://{HOST}:{PORT}/rmmservices/service/price/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It shows all device types existed into database, request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 [
@@ -367,7 +367,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 ```
  - **Delete Service Price:** DELETE `http://{HOST}:{PORT}/rmmservices/service/price/{service-price-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It deletes a price for a device type into database, the request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 {
@@ -379,7 +379,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
  
  - **Create Customer Device:** POST `http://{HOST}:{PORT}/rmmservices/customer/device/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It saves a customer device into database, the request body should be:
  ```json
 {
@@ -399,7 +399,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **Update Customer Device:** PUT `http://{HOST}:{PORT}/rmmservices/customer/device/{customer-device-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It updates a Customer Device into database, the request body should be:
  ```json
   {
@@ -419,7 +419,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **List Customer Devices:** GET `http://{HOST}:{PORT}/rmmservices/customer/device/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It shows all customer devices existed into database, request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 [
@@ -457,7 +457,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 ```
  - **Delete Customer Device:** DELETE `http://{HOST}:{PORT}/rmmservices/customer/device/{customer-device-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It deletes a Customer Device into database, the request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 {
@@ -469,7 +469,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
  
  - **Create Customer Service:** POST `http://{HOST}:{PORT}/rmmservices/customer/service/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It saves a customer service into database, the request body should be:
  ```json
 {
@@ -487,7 +487,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 
  - **List Customer Devices:** GET `http://{HOST}:{PORT}/rmmservices/customer/service/`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It shows all customer services existed into database, request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 [
@@ -510,7 +510,7 @@ The response should be `200 OK` status code with no response body, but 1 header 
 ```
  - **Delete Customer Device:** DELETE `http://{HOST}:{PORT}/rmmservices/customer/service/{customer-service-id}`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
  It deletes a Customer Service into database, the request don't require body.  The response should be `200 OK` status code with the body:
  ```json
 {
@@ -522,8 +522,8 @@ The response should be `200 OK` status code with no response body, but 1 header 
  
  - **Calculate customer monthly cost:** GET `http://{HOST}:{PORT}/rmmservices/customer/service/bill`
  
- This method is private, it requires a header value called `Authorization` with a valid token. 
- It saves a customer service into database, the request don't require body. The response should be `200 OK` status code with the body:
+ This endpoint is private, it requires a header value called `Authorization` with a valid token. 
+ It shows a Montly bill calculation for a customer, the request don't require body. The response should be `200 OK` status code with the body:
  ```json
 {
   "output": 71.00,
@@ -549,4 +549,4 @@ The response should be `200 OK` status code with no response body, but 1 header 
 ```
 
 ### NOTES
-The individual cost per device can be changed on config.device-cost into application.yml properties file located on /src/main/resources/
+The individual cost per device can be changed on config:device-cost into application.yml properties file located on /src/main/resources/
