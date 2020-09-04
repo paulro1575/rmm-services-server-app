@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.NoSuchElementException;
 
 /**
+ * This class handles API exceptions
  * @author Paul Rodríguez-Ch
  */
 @ControllerAdvice

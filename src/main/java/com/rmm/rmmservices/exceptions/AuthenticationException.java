@@ -4,11 +4,16 @@ import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
+/**
+ * This exception is used into the authorization process
+ * @author Paul Rodríguez-Ch
+ */
 public class AuthenticationException extends Throwable {
 
     String message;
     HttpStatus httpStatus;
     ZonedDateTime time;
+
 
     public AuthenticationException(String message, HttpStatus httpStatus) {
         this.message = message;
@@ -16,22 +21,19 @@ public class AuthenticationException extends Throwable {
         this.time = ZonedDateTime.now();
     }
 
-    public AuthenticationException() {
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 
-    public AuthenticationException(String s) {
-        super(s);
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 
-    public AuthenticationException(String s, Throwable throwable) {
-        super(s, throwable);
-    }
 
-    public AuthenticationException(Throwable throwable) {
-        super(throwable);
-    }
-
-    public AuthenticationException(String s, Throwable throwable, boolean b, boolean b1) {
-        super(s, throwable, b, b1);
+    public ZonedDateTime getTime() {
+        return time;
     }
 }

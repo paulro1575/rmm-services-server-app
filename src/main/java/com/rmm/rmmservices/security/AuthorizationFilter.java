@@ -19,12 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class manages the authorization process to verify a logged user
+ */
 public class AuthorizationFilter extends BasicAuthenticationFilter {
+
     public static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
+
 
     public AuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -53,7 +59,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             try{
                 Claims user = Jwts.parser()
-                        .setSigningKey(Keys.hmacShaKeyFor(SecurityConstants.KEY.getBytes()))
+                        .setSigningKey(Keys.hmacShaKeyFor(SecurityConstants.SECURE_KEY.getBytes()))
                         .parseClaimsJws(token)
                         .getBody();
                 if (user != null) {
