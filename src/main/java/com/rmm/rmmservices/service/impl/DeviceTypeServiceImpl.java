@@ -1,5 +1,6 @@
 package com.rmm.rmmservices.service.impl;
 
+import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.model.persistence.repository.DeviceTypeRepository;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -35,6 +37,16 @@ public class DeviceTypeServiceImpl extends GeneralCRUDServiceImpl<DeviceType, De
             throw new NoSuchElementException(String.format("Service: %S not found on the database",
                     dtoObject.getTypeName()));
         }
+    }
+
+    @Override
+    public void deleteByCustomer(Long id, String username) throws DatabaseException {
+
+    }
+
+    @Override
+    public List<DeviceTypeDTO> findAll(String customerName) {
+        return null;
     }
 
     @Override

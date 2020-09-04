@@ -1,6 +1,7 @@
 package com.rmm.rmmservices.service.impl;
 
 import com.rmm.rmmservices.exceptions.DatabaseException;
+import com.rmm.rmmservices.model.persistence.entities.Customer;
 import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
 import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.service.BillCalculationsService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Paul Rodríguez-Ch
@@ -23,13 +25,13 @@ public class BillCalculationsServiceImpl implements BillCalculationsService {
     private CustomerRepository customerRepository;
 
     @Override
-    public ResponseEntity<Object> getMonthlyBill(Long customerId) {
-        if(this.customerRepository.findById(customerId).isPresent()){
-            List<Object[]> servicesPrices = this.customerServiceRepository.listBillServicesPrice(customerId);
-            List<Object[]> devicesPrices = this.customerServiceRepository.listBillDevicesPrice(customerId);
+    public ResponseEntity<Object> getMonthlyBill(Optional<Customer> customer) {
+        if(customer.isPresent()){
+            List<Object[]> servicesPrices = this.customerServiceRepository.listBillServicesPrice(customer.get().getId());
+            List<Object[]> devicesPrices = this.customerServiceRepository.listBillDevicesPrice(customer.get().getId());
             return BillCalculationUtils.getMonthlyBill(servicesPrices, devicesPrices);
         } else {
-            throw new DatabaseException(String.format("Customer %s doesn't exists into database", customerId));
+            throw new DatabaseException(String.format("Customer %s doesn't exists into database", customer.get().getId()));
         }
     }
 }

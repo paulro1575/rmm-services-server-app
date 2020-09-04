@@ -39,7 +39,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(value = {NoSuchElementException.class})
     public ResponseEntity<Object> handleValidationException(NoSuchElementException noSuchElementException) {
-        ApiResponseException apiResponseException = new ApiResponseException("Object was not found into database",
+        ApiResponseException apiResponseException = new ApiResponseException(noSuchElementException.getMessage(),
                 HttpStatus.NOT_FOUND);
         LOGGER.warn(noSuchElementException.getMessage());
         return new ResponseEntity<>(apiResponseException, ResponseEntityHeaderUtils.getJsonContentTypeHeaders(),

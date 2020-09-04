@@ -17,7 +17,7 @@ public class DeviceDTO {
     @NotNull
     private String deviceTypeName;
 
-    @NotNull
+    @Nullable
     private Long customerId;
 
     public DeviceDTO() {

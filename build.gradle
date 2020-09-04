@@ -37,6 +37,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.3.RELEASE'
 	implementation 'org.springframework.security:spring-security-crypto:5.3.4.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt-api:0.10.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.10.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.10.5'
 	implementation 'org.postgresql:postgresql:42.2.16'
 	testImplementation 'junit:junit:4.12'
 	testImplementation('org.springframework.security:spring-security-test')
