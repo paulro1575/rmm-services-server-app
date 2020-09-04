@@ -5,6 +5,7 @@ import com.rmm.rmmservices.model.dto.DeviceDTO;
 import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.service.GeneralCRUDService;
+import com.rmm.rmmservices.utils.ConfigUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,6 +37,8 @@ public class TestDeviceTypeController {
     private GeneralCRUDService<DeviceType, DeviceDTO> deviceTypeServices;
     @InjectMocks
     static DeviceTypeController deviceTypeController;
+    @Mock
+    private ConfigUtils configUtils;
 
     DeviceTypeDTO deviceTypeDTO = new DeviceTypeDTO(null, "NewDeviceTypeName", new BigDecimal("4.00"));
 
@@ -46,6 +50,7 @@ public class TestDeviceTypeController {
 
     @Test
     public void testDeviceTypeCreation() throws Exception {
+        when(configUtils.getDeviceCost()).thenReturn("4.00");
         this.mockMvc.perform(post("/device-type/")
                 .content(deviceTypeDTO.toString())
                 .contentType(MediaType.APPLICATION_JSON))

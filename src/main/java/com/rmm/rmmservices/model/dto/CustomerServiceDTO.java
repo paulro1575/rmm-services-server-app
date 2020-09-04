@@ -64,8 +64,8 @@ public class CustomerServiceDTO {
     @Override
     public String toString() {
         return "{" +
-                "\"customer_id\": \"" + customerId +
-                "\", \"ServiceName\": \"" + serviceName + "\"" +
-                '}';
+                "\"customerId\": \"" + customerId + "\"," +
+                "\"serviceName\": \"" + serviceName + "\"" +
+                "}";
     }
 }
