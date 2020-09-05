@@ -29,9 +29,9 @@ public class TestBillCalculationUtils {
     public void testCalculateMonthlyPriceUtils() throws JsonProcessingException {
 
         ResponseEntity<Object> responseEntity = BillCalculationUtils.getMonthlyBill(getServicesArray(), getDevicesArray());
-        CustomerDevicesCalculationDTO customerDevicesCalculationDTO = getCustomerCalculationsDTO();
-        CustomerDevicesCalculationDTO customerDevicesCalculationDTO1 = (CustomerDevicesCalculationDTO)responseEntity.getBody();
-        Assert.assertEquals(customerDevicesCalculationDTO.getOutput(), customerDevicesCalculationDTO1.getOutput());
+        CustomerDevicesCalculationDTO expectedDevicesCalculationDTO = getCustomerCalculationsDTO();
+        CustomerDevicesCalculationDTO actualDevicesCalculationDTO1 = (CustomerDevicesCalculationDTO)responseEntity.getBody();
+        Assert.assertEquals(expectedDevicesCalculationDTO.getOutput(), actualDevicesCalculationDTO1.getOutput());
     }
 
     private static List<Object[]> getServicesArray(){

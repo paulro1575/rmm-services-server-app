@@ -1,8 +1,8 @@
 package com.rmm.rmmservices;
 
-import com.rmm.rmmservices.controller.CustomerDeviceController;
-import com.rmm.rmmservices.model.dto.DeviceDTO;
-import com.rmm.rmmservices.model.persistence.entities.Device;
+import com.rmm.rmmservices.controller.CustomerServiceController;
+import com.rmm.rmmservices.model.dto.CustomerServiceDTO;
+import com.rmm.rmmservices.model.persistence.entities.CustomerService;
 import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
 import com.rmm.rmmservices.service.GeneralCRUDService;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,31 +27,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * This class test the Customer Devices Controller REST Methods
+ * This class test the Customer Services Controller REST Methods
  * @author Paul Rodríguez-Ch
  */
 @RunWith(MockitoJUnitRunner.class)
-public class TestCustomerDevicesController {
+public class TestCustomerServicesController {
 
     private MockMvc mockMvc;
 
     @Mock
-    private GeneralCRUDService<Device, DeviceDTO> customerDeviceService;
+    private GeneralCRUDService<CustomerService, CustomerServiceDTO> customerServicesService;
     @Mock
     CustomerRepository customerRepository;
     @InjectMocks
-    static CustomerDeviceController customerDeviceController;
+    static CustomerServiceController customerServiceController;
 
-    DeviceDTO deviceDTO = new DeviceDTO(null,
-            "User-PC",
-            "Windows WorkStation",
-            1L);
+
+    CustomerServiceDTO customerServiceDTO;
 
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders
-                .standaloneSetup(customerDeviceController)
+                .standaloneSetup(customerServiceController)
                 .build();
         Authentication authentication = mock(Authentication.class);
         SecurityContext securityContext = mock(SecurityContext.class);
@@ -62,29 +60,23 @@ public class TestCustomerDevicesController {
         when(authentication.getPrincipal()).thenReturn(principal);
         SecurityContextHolder.setContext(securityContext);
         when(authentication.getName()).thenReturn(principal.getName());
+        customerServiceDTO = new CustomerServiceDTO();
+        customerServiceDTO.setCustomerId(1l);
+        customerServiceDTO.setServiceName("NewService");
     }
 
     @Test
-    public void testDeviceCreation() throws Exception {
-        this.mockMvc.perform(post("/customer/device/")
-                .content(deviceDTO.toString())
+    public void testCustomerServiceCreation() throws Exception {
+        this.mockMvc.perform(post("/customer/service/")
+                .content(customerServiceDTO.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void testDeviceList() throws Exception {
-        this.mockMvc.perform(get("/customer/device/")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @Test
-    public void testDeviceUpdate() throws Exception {
-        this.mockMvc.perform(put("/customer/device/1")
-                .content(deviceDTO.toString())
+    public void testCustomerServiceList() throws Exception {
+        this.mockMvc.perform(get("/customer/service/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -92,7 +84,7 @@ public class TestCustomerDevicesController {
 
     @Test
     public void testCustomerServiceDelete() throws Exception {
-        this.mockMvc.perform(delete("/customer/device/1"))
+        this.mockMvc.perform(delete("/customer/service/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }

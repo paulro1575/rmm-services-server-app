@@ -2,8 +2,6 @@ package com.rmm.rmmservices.service.impl;
 
 import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.service.GeneralCRUDService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +20,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
 
     @Autowired
     private JpaRepository<DOMAIN, Long> repository;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 
     @Override
     public DOMAIN create(DTO dtoObject) throws DatabaseException, NoSuchElementException {
@@ -40,6 +38,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
         }
     }
 
+
     @Override
     public void delete(Long id) throws NoSuchElementException {
         try {
@@ -49,6 +48,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
         }
     }
 
+
     @Override
     public List<DTO> findAll(String orderCriteria, Sort.Direction direction) {
         final List<DOMAIN> allDomainObjects = repository.findAll(Sort.by(direction, orderCriteria));
@@ -57,6 +57,7 @@ public abstract class GeneralCRUDServiceImpl<DOMAIN, DTO> implements GeneralCRUD
         return allDtoObjects;
     }
 
+    
     @Override
     public Optional<DOMAIN> findById(Long id) {
         return this.repository.findById(id);

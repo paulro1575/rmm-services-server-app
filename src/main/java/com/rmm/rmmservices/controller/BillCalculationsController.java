@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,8 +34,9 @@ public class BillCalculationsController {
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.GET,
             path="/")
-    public ResponseEntity<Object> calculate(Authentication authentication) throws Exception {
-        String username = CustomerCredentialsUtils.getUsernameFromToken(authentication.getName());
+    public ResponseEntity<Object> calculate() throws Exception {
+        String username = CustomerCredentialsUtils.getUsernameFromToken(SecurityContextHolder.
+                getContext().getAuthentication().getName());
         Optional<Customer> customer = customerRepository.findByUsername(username);
         return this.billCalculationsService.getMonthlyBill(customer);
     }

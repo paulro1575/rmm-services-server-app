@@ -2,7 +2,6 @@ package com.rmm.rmmservices.service.impl;
 
 import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.model.persistence.entities.Customer;
-import com.rmm.rmmservices.model.persistence.repository.CustomerRepository;
 import com.rmm.rmmservices.model.persistence.repository.CustomerServiceRepository;
 import com.rmm.rmmservices.service.BillCalculationsService;
 import com.rmm.rmmservices.utils.BillCalculationUtils;
@@ -21,8 +20,6 @@ public class BillCalculationsServiceImpl implements BillCalculationsService {
 
     @Autowired
     private CustomerServiceRepository customerServiceRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Override
     public ResponseEntity<Object> getMonthlyBill(Optional<Customer> customer) {

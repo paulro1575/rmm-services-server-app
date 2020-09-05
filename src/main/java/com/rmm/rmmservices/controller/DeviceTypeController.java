@@ -4,6 +4,7 @@ import com.rmm.rmmservices.exceptions.DatabaseException;
 import com.rmm.rmmservices.model.dto.DeviceTypeDTO;
 import com.rmm.rmmservices.model.persistence.entities.DeviceType;
 import com.rmm.rmmservices.service.GeneralCRUDService;
+import com.rmm.rmmservices.utils.ConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 
 /**
  * @author Paul Rodríguez-Ch
@@ -25,13 +27,18 @@ public class DeviceTypeController extends GeneralCrudController<DeviceType, Devi
     @Autowired
     @Qualifier("deviceTypeServiceImpl")
     private GeneralCRUDService<DeviceType, DeviceTypeDTO> deviceTypeService;
+    @Autowired
+    private ConfigUtils configUtils;
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
             path="/")
     public ResponseEntity<Object> create(@Valid @RequestBody DeviceTypeDTO deviceTypeDTO) throws Exception {
+        deviceTypeDTO.setDevicePrice(new BigDecimal(configUtils.getDeviceCost()));
         return super.create(deviceTypeDTO);
     }
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.PUT,
@@ -43,12 +50,14 @@ public class DeviceTypeController extends GeneralCrudController<DeviceType, Devi
         return super.update(deviceTypeId, deviceTypeDTO);
     }
 
+
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.GET,
             path="/")
     public ResponseEntity<Object> findAll() throws Exception {
         return super.findAll("id", Sort.Direction.ASC);
     }
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.DELETE,

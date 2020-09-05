@@ -43,7 +43,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.10.5'
 	implementation 'org.postgresql:postgresql:42.2.16'
 	testImplementation 'junit:junit:4.12'
-	testImplementation('org.springframework.security:spring-security-test')
+	testImplementation('org.springframework.security:spring-security-test:5.3.4.RELEASE')
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

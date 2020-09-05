@@ -5,8 +5,6 @@ import com.rmm.rmmservices.model.dto.RmmServiceDTO;
 import com.rmm.rmmservices.model.persistence.entities.RmmService;
 import com.rmm.rmmservices.model.persistence.repository.RmmServiceRepository;
 import com.rmm.rmmservices.utils.MapperUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,6 @@ public class RmmServicesServiceImpl extends GeneralCRUDServiceImpl<RmmService, R
 
     @Autowired
     private RmmServiceRepository rmmServiceRepository;
-    private final Logger LOGGER = LoggerFactory.getLogger(CustomerServicesServiceImpl.class);
 
 
     @Override

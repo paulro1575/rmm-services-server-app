@@ -25,6 +25,7 @@ public class ServicePriceController extends GeneralCrudController<ServicePrice, 
     @Qualifier("servicePriceServiceImpl")
     private GeneralCRUDService<ServicePrice, ServicePriceDTO> servicePriceService;
 
+
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.POST,
             path="/")
@@ -32,12 +33,14 @@ public class ServicePriceController extends GeneralCrudController<ServicePrice, 
         return super.create(servicePriceDTO);
     }
 
+
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.GET,
             path="/")
     public ResponseEntity<Object> findAll() throws Exception {
         return super.findAll("id", Sort.Direction.ASC);
     }
+
 
     @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE},
             method = RequestMethod.DELETE,
