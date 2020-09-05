@@ -67,7 +67,6 @@ public class TestCustomerServicesController {
 
     @Test
     public void testCustomerServiceCreation() throws Exception {
-        System.out.println(customerServiceDTO.toString());
         this.mockMvc.perform(post("/customer/service/")
                 .content(customerServiceDTO.toString())
                 .contentType(MediaType.APPLICATION_JSON))
